@@ -1,6 +1,7 @@
 import { signinSchema, singUpSchema } from "../validations/authValidation"
 import { RequestHandler } from 'express'
 import * as authService from '../services/authService'
+import { sign } from "../middlewares/authMidleware"
 
 
 export const signUp: RequestHandler = async (req, res) => {
@@ -35,7 +36,9 @@ export const signin: RequestHandler = async (req, res) => {
     try {
         const user = await authService.signIn(safeData.data.email, safeData.data.password)
 
-        res.json(user)
+        const token = await sign(user?.email as string)
+
+        res.json({ token: token })
     } catch (error) {
         res.status(400).json({ error: 'Email ou senha incorreto!' })
     }

@@ -1,8 +1,8 @@
-import { User } from '@prisma/client'
 import * as authModel from '../models/authModel'
 import { findUser } from '../models/userModel'
 import bcrypt from 'bcrypt'
 import { newUser } from '../types/userType'
+import { sign } from '../middlewares/authMidleware'
 
 export const signUp = async (data: newUser) => {
     const hasUser = await findUser(data.email)
@@ -24,7 +24,7 @@ export const signUp = async (data: newUser) => {
     return newUser
 }
 
-export const signIn = async (email: string, password) => {
+export const signIn = async (email: string, password: string) => {
     const user = await findUser(email)
 
     if (!user) {
@@ -38,8 +38,6 @@ export const signIn = async (email: string, password) => {
         console.log('Wrong password')
         throw new Error('Wrong password')
     }
-
-    //const token = sign(email)
 
     return userLogged
 }
