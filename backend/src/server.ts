@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
+import { authRouter } from './routers/authRouter';
 
 const server = express();
 
@@ -12,9 +13,7 @@ server.use(express.static('public'));
 
 const port = process.env.PORT || 4000
 
-server.get('/ping', (req, res) => {
-    res.json({ pong: false })
-})
+server.use('/auth', authRouter)
 
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
