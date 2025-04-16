@@ -22,7 +22,7 @@ export const signUp: RequestHandler = async (req, res) => {
 
         res.status(201).json(newUser)
     } catch (error) {
-        res.status(400).json({ error: 'Aconteceu algum error!' })
+        res.status(401).json({ error: 'Aconteceu algum error!' })
     }
 }
 
@@ -40,6 +40,6 @@ export const signin: RequestHandler = async (req, res) => {
 
         res.json({ token: token })
     } catch (error) {
-        res.status(400).json({ error: 'Email ou senha incorreto!' })
+        res.status(401).json({ error: 'Email ou senha incorreto!' })
     }
 }

@@ -1,11 +1,10 @@
 import * as authModel from '../models/authModel'
-import { findUser } from '../models/userModel'
+import { findUserByEmail } from '../models/userModel'
 import bcrypt from 'bcrypt'
-import { newUser } from '../types/userType'
-import { sign } from '../middlewares/authMidleware'
+import { newUser } from '../types/modelsType'
 
 export const signUp = async (data: newUser) => {
-    const hasUser = await findUser(data.email)
+    const hasUser = await findUserByEmail(data.email)
 
     if (hasUser) {
         throw new Error('User has exist')
@@ -25,7 +24,7 @@ export const signUp = async (data: newUser) => {
 }
 
 export const signIn = async (email: string, password: string) => {
-    const user = await findUser(email)
+    const user = await findUserByEmail(email)
 
     if (!user) {
         throw new Error('Email not exist')

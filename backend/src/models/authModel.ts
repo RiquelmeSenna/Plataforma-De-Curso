@@ -1,6 +1,6 @@
 import { User } from "@prisma/client"
 import { prisma } from "../database/prisma"
-import { newUser } from "../types/userType"
+import { newUser } from "../types/modelsType"
 
 
 export const signUp = async (data: newUser) => {

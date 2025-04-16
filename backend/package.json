@@ -24,6 +24,8 @@
     "express": "^5.1.0",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
+    "passport": "^0.7.0",
+    "passport-facebook": "^3.0.0",
     "tsx": "^4.19.3",
     "uuid": "^11.1.0",
     "zod": "^3.24.2"
@@ -35,6 +37,8 @@
     "@types/helmet": "^0.0.48",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.14.0",
+    "@types/passport": "^1.0.17",
+    "@types/passport-facebook": "^3.0.3",
     "@types/uuid": "^10.0.0",
     "prisma": "^6.6.0"
   }

@@ -5,3 +5,8 @@ export type newUser = {
     password: string,
     type: 'Student' | 'Teacher' | 'Admin'
 }
+
+export type CourseCategory = {
+    name: string,
+    description: string
+}

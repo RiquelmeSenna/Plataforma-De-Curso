@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { NextFunction, Response } from 'express'
 import { ExtendedRequest } from '../types/requestType'
-import { findUser } from '../models/userModel'
+import { findUserByEmail } from '../models/userModel'
 
 
 export const sign = async (email: string) => {
@@ -22,7 +22,7 @@ export const authMiddleware = async (req: ExtendedRequest, res: Response, next: 
 
             try {
                 const email = decoded
-                const user = await findUser(email)
+                const user = await findUserByEmail(email)
                 if (!user) {
                     return res.status(400).json({ error: 'Não existe usuario com este email' })
                 }
