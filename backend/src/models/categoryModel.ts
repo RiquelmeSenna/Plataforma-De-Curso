@@ -8,7 +8,24 @@ export const getCategories = async () => {
 }
 
 export const getCategoryById = async (id: number) => {
-    const category = await prisma.courseCategory.findFirst({ where: { id } })
+    const category = await prisma.courseCategory.findFirst({
+        where: { id },
+        select: {
+            name: true,
+            description: true,
+            Courses: {
+                select: {
+                    name: true,
+                    price: true,
+                    Rating: {
+                        select: {
+                            rating: true
+                        }
+                    },
+                }
+            }
+        }
+    })
 
     return category
 }

@@ -24,12 +24,8 @@ Rotas :
         /courses/search?nome-do-curso : GET -> Rota de Pesquisar Cursos
         /courses/:id/reviews : GET -> Rota de Reviews por ID do curso
         /courses/:id/modules : GET -> Rota de Modulos por ID do curso
-        /courses/:id/modules/:id-do-modulo : GET -> Rota de Modulos por ID do curso e ID do modulo
-        /courses/:id/modules/:id-do-modulo/search?q=nome-do-modulo : GET -> Rota de Pesquisar Modulos por ID do curso e ID do modulo
         /courses/:id/enrollment/ : GET -> Rota de Inscrições por ID do curso
-        /courses/:id/enrollment/:studentId : GET -> Rota de Inscrições por ID do curso e ID do aluno
-        /courses/:id/reviews/ : POST -> Rota de Criar Reviews por ID do curso
-        /courses/:id/enrollment : POST -> Rota de Criar Inscrições por ID do curso
+        
 
     Categorias : 
         /categories : GET -> Rota de Categorias
@@ -40,6 +36,7 @@ Rotas :
         /categories/search?nome-da-categoria : GET -> Rota de Pesquisar Categorias
 
     Modules : 
+        /modules/:id : GET -> Rota de Modulos por ID do modulo
         /modules : POST -> Rota de Criar Modulos
         /modules/:id : PUT -> Rota de Atualizar Modulos por ID do modulo
         /modules/:id : DELETE -> Rota de Deletar Modulos por ID do modulo
@@ -52,9 +49,12 @@ Rotas :
         /videos/:id-do-video : DELETE -> Rota de Deletar Videos por ID do video
     
     Enrollment : 
+        /enrollment/:studentId : GET -> Rota de Inscrições por ID do aluno
         /enrollment/:id-da-inscricao : PUT -> Rota de Atualizar Inscrições por ID da inscrição
         /enrollment/:id-da-inscricao : DELETE -> Rota de Deletar Inscrições por ID da inscrição
 
     Reviews : 
+        /reviews : POST -> Rota de Criar Reviews
         /reviews/id-do-review : PUT -> Rota de Atualizar Reviews por ID do curso e ID do review
         /reviews/id-do-review : DELETE -> Rota de Deletar Reviews por ID do curso e ID do review
+        /enrollment : POST -> Rota de Criar Inscrições

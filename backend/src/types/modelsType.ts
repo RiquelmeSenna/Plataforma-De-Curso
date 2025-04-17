@@ -10,3 +10,21 @@ export type CourseCategory = {
     name: string,
     description: string
 }
+
+export type updateCourseType = {
+    name?: string,
+    description?: string,
+    categoryId?: number,
+    price?: number,
+    updateAt: Date,
+}
+
+export type CourseType = {
+    name: string,
+    price: number,
+    description: string,
+    categoryId: number,
+    teacherId: number,
+    createdAt: Date,
+    updateAt: Date,
+}
