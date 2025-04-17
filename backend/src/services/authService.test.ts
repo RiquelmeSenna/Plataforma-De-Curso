@@ -1,7 +1,6 @@
 import { describe, test, expect, beforeAll, afterAll } from '@jest/globals';
 import { newUser } from '../types/modelsType';
 import * as authService from './authService';
-import { prisma } from '../database/prisma';
 import { deleteUserByEmail } from '../models/userModel';
 
 

@@ -29,11 +29,14 @@ export const updateCategory = async (email: string, id: number, description: str
         throw new Error('User not authorized')
     }
 
-    const updatedCategory = await categoryModel.updateCategory(id, description, name)
+    const category = await categoryModel.getCategoryById(id)
 
-    if (!updatedCategory) {
+    if (!category) {
         throw new Error('Category not exist')
     }
+
+    const updatedCategory = await categoryModel.updateCategory(id, description, name)
+
 
     return updatedCategory
 }
@@ -45,11 +48,13 @@ export const deleteCategory = async (email: string, id: number) => {
         throw new Error('User not authorized')
     }
 
-    const category = await categoryModel.deleteCategory(id)
+    const category = await categoryModel.getCategoryById(id)
 
     if (!category) {
         throw new Error('Category not exist')
     }
+
+    const deletedCategory = await categoryModel.deleteCategory(id)
 
     return true
 }
