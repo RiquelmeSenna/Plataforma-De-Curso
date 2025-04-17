@@ -1,14 +1,15 @@
 import { signinSchema, singUpSchema } from "../validations/authValidation"
-import { RequestHandler } from 'express'
+import { Request, RequestHandler, Response } from 'express'
 import * as authService from '../services/authService'
 import { sign } from "../middlewares/authMidleware"
 
 
-export const signUp: RequestHandler = async (req, res) => {
+export const signUp = async (req: Request, res: Response) => {
     const safeData = singUpSchema.safeParse(req.body)
 
     if (!safeData.success) {
-        return res.status(401).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(401).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {
@@ -26,11 +27,12 @@ export const signUp: RequestHandler = async (req, res) => {
     }
 }
 
-export const signin: RequestHandler = async (req, res) => {
+export const signin = async (req: Request, res: Response) => {
     const safeData = signinSchema.safeParse(req.body)
 
     if (!safeData.success) {
-        return res.status(401).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(401).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {

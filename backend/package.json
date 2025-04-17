@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node --import=tsx --watch --env-file=.env src/server.ts "
+    "dev": "node --import=tsx --watch --env-file=.env src/server.ts ",
+    "build": "tsc",
+    "test": "set NODE_ENV=test && jest",
+    "start": "node dist/server.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +26,7 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "helmet": "^8.1.0",
+    "jest": "^29.7.0",
     "jsonwebtoken": "^9.0.2",
     "passport": "^0.7.0",
     "passport-facebook": "^3.0.0",
@@ -31,15 +35,21 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-typescript": "^7.27.0",
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/helmet": "^0.0.48",
+    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.14.0",
     "@types/passport": "^1.0.17",
     "@types/passport-facebook": "^3.0.3",
     "@types/uuid": "^10.0.0",
-    "prisma": "^6.6.0"
+    "babel-jest": "^29.7.0",
+    "prisma": "^6.6.0",
+    "ts-jest": "^29.3.2"
   }
 }

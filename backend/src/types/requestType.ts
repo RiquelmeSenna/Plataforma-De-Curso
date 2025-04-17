@@ -1,5 +1,7 @@
 import { Request } from "express";
 
-export type ExtendedRequest = Request & {
-    UserEmail: string
+declare module 'express' {
+    export interface Request {
+        UserEmail?: string;
+    }
 }
