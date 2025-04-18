@@ -1,8 +1,9 @@
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
-import { authRouter } from './routers/authRouter';
-import { categoryRouter } from './routers/categoryRouter';
+import authRouter from './routers/authRouter';
+import categoryRouter from './routers/categoryRouter';
+import coursersRouter from './routers/courserRouter';
 
 const server = express();
 
@@ -16,6 +17,7 @@ const port = process.env.PORT || 4000
 
 server.use('/auth', authRouter)
 server.use('/categories', categoryRouter)
+server.use('/courses', coursersRouter)
 
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`);

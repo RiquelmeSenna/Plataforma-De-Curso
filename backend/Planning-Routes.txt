@@ -18,9 +18,9 @@ Rotas :
     Cursos :
         /courses : GET -> Rotas de Cursos
         /courses/:id : GET -> Rota de Cursos por ID
+        /courses : POST -> Rota de Criar Cursos
         /courses/:id : PUT -> Rota de Atualizar Cursos por ID
         /courses/:id : DELETE -> Rota de Deletar Cursos por ID
-        /courses : POST -> Rota de Criar Cursos
         /courses/search?nome-do-curso : GET -> Rota de Pesquisar Cursos
         /courses/:id/reviews : GET -> Rota de Reviews por ID do curso
         /courses/:id/modules : GET -> Rota de Modulos por ID do curso

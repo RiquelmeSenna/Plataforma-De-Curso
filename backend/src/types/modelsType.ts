@@ -16,7 +16,6 @@ export type updateCourseType = {
     description?: string,
     categoryId?: number,
     price?: number,
-    updateAt: Date,
 }
 
 export type CourseType = {
@@ -25,6 +24,4 @@ export type CourseType = {
     description: string,
     categoryId: number,
     teacherId: number,
-    createdAt: Date,
-    updateAt: Date,
 }
