@@ -54,7 +54,7 @@ export const deleteCourse = async (id: number, teacherId: number) => {
     if (!deletedCourse) {
         throw new Error("It's not possible to delete this course")
     }
-    return deletedCourse
+    return true
 }
 
 export const createCourse = async (data: CourseType, id: number) => {
@@ -79,7 +79,7 @@ export const getCourseByName = async (name: string) => {
     const course = await coursesModel.getCourseByName(name)
 
     if (course.length < 1) {
-        throw new Error('Coursse not found')
+        throw new Error('Courses not found')
     }
 
     return course

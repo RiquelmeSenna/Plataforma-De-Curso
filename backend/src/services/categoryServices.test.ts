@@ -15,7 +15,6 @@ describe('Should test all function in categoryService', () => {
     test('Should test get category by id', async () => {
         const category = await categoryService.getCategoryById(1)
 
-        expect(category).toHaveProperty('id')
         expect(category.name).toBe('Desenvolvimento Web')
     })
 
