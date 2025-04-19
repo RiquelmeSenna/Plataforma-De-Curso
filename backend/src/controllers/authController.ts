@@ -21,7 +21,13 @@ export const signUp = async (req: Request, res: Response) => {
             type: safeData.data.type
         })
 
-        res.status(201).json(newUser)
+        res.status(201).json({
+            user: {
+                name: newUser.name,
+                email: newUser.email,
+                type: newUser.type,
+            }
+        })
     } catch (error) {
         res.status(401).json({ error: 'Aconteceu algum error!' })
     }

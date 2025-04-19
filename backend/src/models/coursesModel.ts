@@ -2,19 +2,43 @@ import { prisma } from "../database/prisma"
 import { CourseType, updateCourseType } from "../types/modelsType"
 
 export const getCourses = async () => {
-    const courses = await prisma.course.findMany()
+    const courses = await prisma.course.findMany({
+        include: {
+            category: {
+                select: {
+                    name: true
+                }
+            }
+        }
+    })
     return courses
 }
 
 export const getCourseById = async (id: number) => {
-    const course = await prisma.course.findFirst({ where: { id } })
+    const course = await prisma.course.findFirst({
+        where: { id },
+        include: {
+            category: {
+                select: {
+                    name: true
+                }
+            },
+            Module: {
+                select: {
+                    name: true,
+                    ModuleProgress: true,
+                    description: true
+                }
+            },
+        }
+    })
     return course
 }
 
 export const updateCourse = async (id: number, data: updateCourseType) => {
     const updatedCourse = await prisma.course.update({
         where: { id },
-        data
+        data,
     })
 
     return updatedCourse
@@ -26,7 +50,16 @@ export const deleteCourse = async (id: number) => {
 }
 
 export const createCourse = async (data: CourseType) => {
-    const newCourse = await prisma.course.create({ data })
+    const newCourse = await prisma.course.create({
+        data,
+        include: {
+            category: {
+                select: {
+                    name: true
+                }
+            }
+        }
+    })
     return newCourse
 }
 
@@ -36,6 +69,13 @@ export const getCourseByName = async (name: string) => {
             name: {
                 contains: name,
                 mode: 'insensitive'
+            }
+        },
+        include: {
+            category: {
+                select: {
+                    name: true
+                }
             }
         }
     })

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as courseController from "../controllers/courserController";
+import * as courseController from "../controllers/courseController";
 import { authMiddleware } from "../middlewares/authMidleware";
 
 
@@ -9,7 +9,6 @@ coursersRouter.get('/', courseController.getAllCourses)
 coursersRouter.get('/search', courseController.getCourseByName)
 coursersRouter.get('/:id', courseController.getCourseById)
 coursersRouter.get('/:id/reviews', courseController.getReviewsByCourseId)
-coursersRouter.get('/:id/modules', courseController.getModulesByCourseId)
 coursersRouter.get('/:id/enrollments', courseController.getEnrollmentsByCourseId)
 coursersRouter.post('/', authMiddleware, courseController.createCourse)
 coursersRouter.put('/:id', authMiddleware, courseController.updateCourse)

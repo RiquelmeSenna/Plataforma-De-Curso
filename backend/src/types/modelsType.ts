@@ -25,3 +25,15 @@ export type CourseType = {
     categoryId: number,
     teacherId: number,
 }
+
+export type ModuleType = {
+    name: string,
+    description: string,
+    courseId: number,
+}
+
+export type updateModuleType = {
+    name?: string,
+    description?: string,
+    courseId?: number,
+}

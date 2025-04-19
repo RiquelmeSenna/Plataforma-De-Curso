@@ -7,7 +7,16 @@ import { findUserByEmail } from "../models/userModel";
 export const getAllCourses = async (req: Request, res: Response) => {
     try {
         const courses = await courseService.getallCourses()
-        res.status(200).json(courses)
+        res.status(200).json({
+            Courses: courses.map(course => {
+                return {
+                    name: course.name,
+                    description: course.description,
+                    price: course.price,
+                    category: course.category
+                }
+            })
+        })
     } catch (error) {
         res.status(500).json({ error: 'Não foi possivel achar cursos' })
     }
@@ -22,7 +31,14 @@ export const getCourseById = async (req: Request, res: Response) => {
 
     try {
         const course = await courseService.getCourseById(parseInt(safeData.data.id))
-        res.status(200).json(course)
+        res.status(200).json({
+            course: {
+                name: course.name,
+                description: course.description,
+                price: course.price,
+                category: course.category,
+            }
+        })
     } catch (error) {
         res.status(500).json({ error: 'Não foi possivel achar o curso' })
     }
@@ -37,7 +53,16 @@ export const getCourseByName = async (req: Request, res: Response) => {
 
     try {
         const courses = await courseService.getCourseByName(safeData.data.name)
-        res.status(200).json(courses)
+        res.status(200).json({
+            Courses: courses.map(course => {
+                return {
+                    name: course.name,
+                    description: course.description,
+                    price: course.price,
+                    category: course.category
+                }
+            })
+        })
     } catch (error) {
         res.status(500).json({ error: 'Não foi possivel achar o curso' })
     }
@@ -52,27 +77,24 @@ export const getReviewsByCourseId = async (req: Request, res: Response) => {
 
     try {
         const reviews = await courseService.getReviewsByCourseId(parseInt(safeData.data.id))
-        res.status(200).json(reviews)
+        res.status(200).json({
+            Reviews: reviews.map(review => {
+                return {
+                    rating: review.rating,
+                    comment: review.comment,
+                    student: {
+                        name: review.student.name,
+                        email: review.student.email,
+                    }
+                }
+            })
+        })
     } catch (error) {
         res.status(500).json({ error: 'Não foi possivel achar as reviews do curso' })
     }
 
 }
 
-export const getModulesByCourseId = async (req: Request, res: Response) => {
-    const safeData = courseValidator.courseIdSchema.safeParse(req.params)
-
-    if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
-    }
-
-    try {
-        const modules = await courseService.getModulesByCourseId(parseInt(safeData.data.id))
-        res.status(200).json(modules)
-    } catch (error) {
-        res.status(500).json({ error: 'Não foi possivel achar os modulos do curso' })
-    }
-}
 export const getEnrollmentsByCourseId = async (req: Request, res: Response) => {
     const safeData = courseValidator.courseIdSchema.safeParse(req.params)
 
@@ -113,7 +135,14 @@ export const createCourse = async (req: Request, res: Response) => {
             teacherId: user.id,
         }, user.id)
 
-        res.status(201).json(newCourse)
+        res.status(201).json({
+            course: {
+                name: newCourse.name,
+                description: newCourse.description,
+                price: newCourse.price,
+                category: newCourse.category,
+            }
+        })
     } catch (error) {
         res.status(500).json({ error: 'Não foi possivel criar o curso' })
     }
@@ -141,7 +170,13 @@ export const updateCourse = async (req: Request, res: Response) => {
             price: safeDataBody.data.price,
         })
 
-        res.status(200).json(updatedCourse)
+        res.status(200).json({
+            course: {
+                name: updatedCourse.name,
+                description: updatedCourse.description,
+                price: updatedCourse.price,
+            }
+        })
     } catch (error) {
         res.status(500).json({ error: 'Não foi possivel atualizar o curso' })
     }
