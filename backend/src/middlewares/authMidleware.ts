@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { NextFunction, Request, Response } from 'express'
 import { findUserByEmail } from '../models/userModel'
-
+import '../types/requestType'
 
 export const sign = async (email: string) => {
     return jwt.sign(email, process.env.JWT_SECRET as string)

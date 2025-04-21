@@ -34,6 +34,5 @@ export type ModuleType = {
 
 export type updateModuleType = {
     name?: string,
-    description?: string,
-    courseId?: number,
+    description?: string
 }
