@@ -2,7 +2,22 @@ import { prisma } from "../database/prisma";
 import { ModuleType, updateModuleType } from "../types/modelsType";
 
 export const getModuleById = async (id: number) => {
-    const module = await prisma.module.findFirst({ where: { id } })
+    const module = await prisma.module.findFirst({
+        where: { id }, include: {
+            course: {
+                select: {
+                    teacherId: true
+                }
+            },
+            Video: {
+                select: {
+                    name: true,
+                    url: true,
+                    VideoProgress: true
+                }
+            }
+        }
+    })
 
     return module
 }

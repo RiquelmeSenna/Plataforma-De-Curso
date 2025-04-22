@@ -37,6 +37,7 @@ export const getCourseById = async (req: Request, res: Response) => {
                 description: course.description,
                 price: course.price,
                 category: course.category,
+                module: course.Module
             }
         })
     } catch (error) {

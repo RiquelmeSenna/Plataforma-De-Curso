@@ -1,14 +1,24 @@
 import { getCourseById } from '../models/coursesModel';
+import { getEnrollment } from '../models/enrollmentModel';
 import * as moduleModel from '../models/moduleModel';
 import { findUserByEmail, findUserById } from '../models/userModel';
 import { ModuleType } from '../types/modelsType';
 
-export const getModuleById = async (id: number) => {
+export const getModuleById = async (id: number, email: string) => {
+    const user = await findUserByEmail(email)
+    const enrollment = await getEnrollment(user?.id as number)
+
     const module = await moduleModel.getModuleById(id)
 
     if (!module) {
         throw new Error('Module not found')
     }
+
+    if (enrollment?.courseId != module?.courseId && user?.id != module?.course.teacherId) {
+        throw new Error("You not available for this course or you not the teacher")
+    }
+
+
     return module
 }
 

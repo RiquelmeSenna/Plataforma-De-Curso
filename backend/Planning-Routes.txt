@@ -40,8 +40,6 @@ Rotas :
         /modules : POST -> Rota de Criar Modulos
         /modules/:id : PUT -> Rota de Atualizar Modulos por ID do modulo
         /modules/:id : DELETE -> Rota de Deletar Modulos por ID do modulo
-        /modules/:id/videos/ : GET -> Rota de Videos por ID do modulo
-        /modules/:id/videos/id-do-video : GET -> Rota de Videos por ID do modulo e ID do video
 
     Video : 
         /videos : POST -> Rota de Criar Videos

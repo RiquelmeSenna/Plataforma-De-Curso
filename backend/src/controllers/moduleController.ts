@@ -11,12 +11,13 @@ export const getModuleById = async (req: Request, res: Response) => {
     }
 
     try {
-        const module = await moduleService.getModuleById(parseInt(safeData.data.id));
+        const module = await moduleService.getModuleById(parseInt(safeData.data.id), req.UserEmail as string);
 
         res.status(200).json({
             module: {
                 name: module.name,
                 description: module.description,
+                video: module.Video
             }
         });
     } catch (error) {
@@ -27,9 +28,13 @@ export const getModuleById = async (req: Request, res: Response) => {
 export const createModule = async (req: Request, res: Response) => {
     const safeData = moduleValidator.createModuleSchema.safeParse(req.body);
 
+    if (!req.body) {
+        return res.status(400).json({ error: 'Mande algum dado' })
+    }
     if (!safeData.success) {
         return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
     }
+
 
     const user = await findUserByEmail(req.UserEmail as string)
 
@@ -103,7 +108,9 @@ export const deleteModule = async (req: Request, res: Response) => {
     }
 
     try {
+        const deletedModule = await moduleService.deleteModule(user.email, parseInt(safeData.data.id))
 
+        res.status(200).json({ Deleted: true })
     } catch (error) {
         res.status(500).json({ error: 'Não foi possivel deletar o modulo' })
     }
