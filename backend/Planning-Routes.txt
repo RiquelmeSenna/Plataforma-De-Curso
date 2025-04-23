@@ -42,6 +42,7 @@ Rotas :
         /modules/:id : DELETE -> Rota de Deletar Modulos por ID do modulo
 
     Video : 
+        /videos/:id GET -> Rota de pegar o video
         /videos : POST -> Rota de Criar Videos
         /videos/:id-do-video : PUT -> Rota de Atualizar Videos por ID do video
         /videos/:id-do-video : DELETE -> Rota de Deletar Videos por ID do video

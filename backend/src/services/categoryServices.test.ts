@@ -88,7 +88,7 @@ describe('Should test all function in categoryService', () => {
         const categories = await categoryService.getCategoryByName('Desenvolvimento')
 
         expect(categories.length).toBeGreaterThanOrEqual(1)
-        expect(categories[0].name).toBe('Desenvolvimento Web')
+        expect(categories[0].name).toBe('Desenvolvimento de jogos')
     })
 
     test("Shouldn't get categories by name if category not exist", async () => {

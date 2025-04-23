@@ -36,3 +36,19 @@ export type updateModuleType = {
     name?: string,
     description?: string
 }
+
+export type videoType = {
+    name: string,
+    description: string,
+    url: string,
+    duration: number,
+    moduleId: number
+}
+
+export type videoUpdateType = {
+    name?: string,
+    description?: string,
+    url?: string,
+    duration?: number,
+    moduleId?: number
+}

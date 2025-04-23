@@ -6,6 +6,7 @@ import categoryRouter from './routers/categoryRouter';
 import coursersRouter from './routers/courserRouter';
 import "../src/types/requestType"
 import moduleRouter from './routers/moduleRouter';
+import videoRouter from './routers/videoRouter';
 
 
 const server = express();
@@ -22,6 +23,7 @@ server.use('/auth', authRouter)
 server.use('/categories', categoryRouter)
 server.use('/courses', coursersRouter)
 server.use('/modules', moduleRouter)
+server.use('/videos', videoRouter)
 
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
