@@ -6,6 +6,12 @@ export type newUser = {
     type: 'Student' | 'Teacher' | 'Admin'
 }
 
+export type UpdateUser = {
+    name?: string,
+    email?: string,
+    password?: string
+}
+
 export type CourseCategory = {
     name: string,
     description: string

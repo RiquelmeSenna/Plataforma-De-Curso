@@ -22,7 +22,7 @@ describe('Should test all function in authService', () => {
     })
 
     test('Should test user login', async () => {
-        const userLogged = await authService.signIn(user.email, user.password)
+        const userLogged = await authService.signIn(user.email, 'Teste123!')
 
         expect(userLogged).toHaveProperty('id')
         expect(userLogged?.email).toBe(user.email)

@@ -1,7 +1,6 @@
 Rotas :
     Tela inicial :
         / : GET -> Rota Home
-        /me : GET -> Rota de usuario logado
         
         
     Autenticação : 
@@ -11,9 +10,10 @@ Rotas :
         /auth/change-password : POST -> Rota de Alterar senha
     
     User : 
+        /users/me : GET -> Rota de usuario logado
         /users/:id : GET -> Rota de usuario
-        /users/:id : PUT -> Rota de Atualizar usuario por ID
-        /users/:id : DELETE -> Rota de Deletar usuario por ID
+        /users/me : PUT -> Rota de Atualizar usuario por ID
+        /users/me : DELETE -> Rota de Deletar usuario por ID
         
     Cursos :
         /courses : GET -> Rotas de Cursos
