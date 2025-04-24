@@ -5,23 +5,20 @@ export const findUserByEmail = async (email: string) => {
     const user = await prisma.user.findFirst(
         {
             where: { email },
-            select: {
-                cpf: true,
+            include: {
                 Enrollment: {
                     select: {
                         course: true,
-                        concluded: true
+                        concluded: true,
                     }
                 },
-                name: true,
                 Rating: {
                     select: {
                         comment: true,
                         course: true,
-                        rating: true
+                        rating: true,
                     }
-                },
-                email: true
+                }
             }
         })
 
