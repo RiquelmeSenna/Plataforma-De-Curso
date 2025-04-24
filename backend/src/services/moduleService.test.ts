@@ -3,7 +3,7 @@ import * as moduleService from './moduleService'
 import { Module } from "@prisma/client";
 
 
-describe('Should test all services from modules', () => {
+describe('Should test all services from modules Service', () => {
     let newVideo: Module
 
     const email = 'riquelmeteacher@gmail.com'
