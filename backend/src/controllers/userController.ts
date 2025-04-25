@@ -7,7 +7,15 @@ export const getMe = async (req: Request, res: Response) => {
     try {
         const user = await userService.findUserLogged(req.UserEmail as string)
 
-        res.status(200).json({ user })
+        res.status(200).json({
+            user: {
+                name: user.name,
+                cpf: user.cpf,
+                email: user.email,
+                enrollment: user.Enrollment,
+                rating: user.Rating
+            }
+        })
     } catch (error) {
         res.status(500).json({ error: 'Não foi possivel acessar o perfil' })
     }
@@ -32,8 +40,12 @@ export const getUserById = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
     const safeData = userValidation.updateUserSchema.safeParse(req.body)
 
+    if (!req.body) {
+        return res.status(400).json({ error: "Mande alguma informação" })
+    }
+
     if (!safeData.success) {
-        return res.status(400).json({ erro: safeData.error.flatten().fieldErrors })
+        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
     }
 
     try {

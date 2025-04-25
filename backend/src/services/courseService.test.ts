@@ -97,7 +97,7 @@ describe('Should test all functions from courseService', () => {
 
     test("Shouldn't delete a course because user is not a Teacher", async () => {
         await expect(() => {
-            return courseService.deleteCourse(newCourse.id, 1)
+            return courseService.deleteCourse(newCourse.id, 48)
         }).rejects.toThrow('You are not authorized to delete this course')
     })
 

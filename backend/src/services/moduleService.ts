@@ -60,6 +60,10 @@ export const updateModule = async (email: string, id: number, description: strin
         name
     })
 
+    if (!updatedModule) {
+        throw new Error("Some wrong data")
+    }
+
     return updatedModule
 }
 

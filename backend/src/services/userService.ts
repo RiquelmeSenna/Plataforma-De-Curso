@@ -1,3 +1,4 @@
+import { use } from 'passport'
 import * as userModel from '../models/userModel'
 import { UpdateUser } from '../types/modelsType'
 import bcrypt from 'bcrypt'
@@ -26,26 +27,29 @@ export const updateUser = async (email: string, data: UpdateUser) => {
     const user = await userModel.findUserByEmail(email)
 
     if (!user) {
+        console.log('aqui 1')
         throw new Error("User is not logged")
     }
 
-    if (data.email !== email) {
-        const hasUser = await userModel.findUserByEmail(data.email as string)
-
-        if (hasUser) {
-            throw new Error('Email not available')
-        }
+    const updateData: Partial<UpdateUser> = {
+        name: data.name,
+        email: data.email
     }
 
-    const passwordHash = await bcrypt.hash(data.password as string, 10)
+    if (data.password) {
+        const passwordHash = await bcrypt.hash(data.password as string, 10)
+        updateData.password = passwordHash
+    }
+
 
     const updatedUser = await userModel.updateUserByEmail(user.email, {
         email: data.email,
         name: data.name,
-        password: passwordHash
+        password: updateData.password
     })
 
     if (!updatedUser) {
+        console.log('aqui 4')
         throw new Error("It's not possible update User")
     }
 
