@@ -14,17 +14,18 @@ datasource db {
 }
 
 model User {
-  id             Int              @id @default(autoincrement())
-  type           Type             @default(Student)
-  name           String
-  cpf            String           @unique
-  email          String           @unique
-  password       String
-  Courses        Course[]
-  ModuleProgress ModuleProgress[]
-  VideoProgress  VideoProgress[]
-  Enrollment     Enrollment[]
-  Rating         Rating[]
+  id               Int              @id @default(autoincrement())
+  type             Type             @default(Student)
+  name             String
+  cpf              String           @unique
+  email            String           @unique
+  password         String
+  stripeCustomerId String?
+  Courses          Course[]
+  ModuleProgress   ModuleProgress[]
+  VideoProgress    VideoProgress[]
+  Enrollment       Enrollment[]
+  Rating           Rating[]
 }
 
 enum Type {
@@ -34,19 +35,21 @@ enum Type {
 }
 
 model Course {
-  id          Int            @id @default(autoincrement())
-  name        String
-  price       Int
-  description String
-  categoryId  Int
-  teacherId   Int
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-  category    CourseCategory @relation(fields: [categoryId], references: [id])
-  teacher     User           @relation(fields: [teacherId], references: [id])
-  Module      Module[]
-  Enrollment  Enrollment[]
-  Rating      Rating[]
+  id              Int            @id @default(autoincrement())
+  name            String
+  price           Int
+  description     String
+  categoryId      Int
+  teacherId       Int
+  concluded       Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  stripeProductId String
+  updatedAt       DateTime       @updatedAt
+  category        CourseCategory @relation(fields: [categoryId], references: [id])
+  teacher         User           @relation(fields: [teacherId], references: [id])
+  Module          Module[]
+  Enrollment      Enrollment[]
+  Rating          Rating[]
 }
 
 model CourseCategory {
@@ -101,12 +104,11 @@ model VideoProgress {
 }
 
 model Enrollment {
-  id        Int     @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   courseId  Int
   studentId Int
-  concluded Boolean @default(false)
-  course    Course  @relation(fields: [courseId], references: [id])
-  student   User    @relation(fields: [studentId], references: [id])
+  course    Course @relation(fields: [courseId], references: [id])
+  student   User   @relation(fields: [studentId], references: [id])
 }
 
 model Rating {

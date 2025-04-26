@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import * as courseService from '../services/courseService'
 import * as courseValidator from '../validations/courserValidation'
 import { findUserByEmail } from "../models/userModel";
+import { createStripePayment } from "../utils/stripe";
 
 
 export const getAllCourses = async (req: Request, res: Response) => {
@@ -128,12 +129,15 @@ export const createCourse = async (req: Request, res: Response) => {
     }
 
     try {
+        const stripePayment = await createStripePayment(safeData.data.name, safeData.data.price)
+
         const newCourse = await courseService.createCourse({
             categoryId: safeData.data.categoryId,
             description: safeData.data.description,
             name: safeData.data.name,
             price: safeData.data.price,
             teacherId: user.id,
+            stripeProductId: stripePayment.id
         }, user.id)
 
         res.status(201).json({

@@ -4,9 +4,7 @@ import { newUser } from "../types/modelsType"
 
 
 export const signUp = async (data: newUser) => {
-    const newUser = await prisma.user.create({
-        data
-    })
+    const newUser = await prisma.user.create({ data })
 
     return newUser
 }

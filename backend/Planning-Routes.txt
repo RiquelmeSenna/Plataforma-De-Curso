@@ -48,7 +48,7 @@ Rotas :
         /videos/:id-do-video : DELETE -> Rota de Deletar Videos por ID do video
     
     Enrollment : 
-        /enrollment/:studentId : GET -> Rota de Inscrições por ID do aluno
+        /enrollment/:courseId : GET -> Rota de Inscrições por ID do aluno
         /enrollment/:id-da-inscricao : PUT -> Rota de Atualizar Inscrições por ID da inscrição
         /enrollment/:id-da-inscricao : DELETE -> Rota de Deletar Inscrições por ID da inscrição
 

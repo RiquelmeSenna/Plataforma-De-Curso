@@ -8,10 +8,13 @@ import "../src/types/requestType"
 import moduleRouter from './routers/moduleRouter';
 import videoRouter from './routers/videoRouter';
 import userRouter from './routers/usersRouter';
+import enrollmentRouter from './routers/enrollmentRouter';
+import webHookRouter from './routers/webHookRouter';
 
 
 const server = express();
 
+server.use('/webhook', webHookRouter)
 server.use(cors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
@@ -26,6 +29,7 @@ server.use('/courses', coursersRouter)
 server.use('/modules', moduleRouter)
 server.use('/videos', videoRouter)
 server.use('/users', userRouter)
+server.use('/enrollments', enrollmentRouter)
 
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`);

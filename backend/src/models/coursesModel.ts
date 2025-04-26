@@ -121,7 +121,6 @@ export const getEnrollmentsByCourseId = async (id: number) => {
         select: {
             Enrollment: {
                 select: {
-                    concluded: true,
                     student: true,
                     course: true
                 }

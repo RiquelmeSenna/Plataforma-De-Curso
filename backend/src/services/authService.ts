@@ -12,13 +12,11 @@ export const signUp = async (data: newUser) => {
 
     const passwordHash = await bcrypt.hash(data.password, 10)
 
-    const newUser = await authModel.signUp({
-        cpf: data.cpf,
-        email: data.email,
-        name: data.name,
-        password: passwordHash,
-        type: data.type
-    })
+    const newUser = await authModel.signUp({ ...data, password: passwordHash })
+
+    if (!newUser) {
+        throw new Error("It's not possible create user")
+    }
 
     return newUser
 }

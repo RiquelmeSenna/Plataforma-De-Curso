@@ -3,13 +3,15 @@ export type newUser = {
     email: string,
     cpf: string,
     password: string,
+    stripeCustomerId?: string
     type: 'Student' | 'Teacher' | 'Admin'
 }
 
 export type UpdateUser = {
     name?: string,
     email?: string,
-    password?: string
+    password?: string,
+    stripeCustomerId?: string
 }
 
 export type CourseCategory = {
@@ -22,6 +24,7 @@ export type updateCourseType = {
     description?: string,
     categoryId?: number,
     price?: number,
+    concluded?: boolean
 }
 
 export type CourseType = {
@@ -30,6 +33,7 @@ export type CourseType = {
     description: string,
     categoryId: number,
     teacherId: number,
+    stripeProductId: string
 }
 
 export type ModuleType = {
@@ -57,4 +61,10 @@ export type videoUpdateType = {
     url?: string,
     duration?: number,
     moduleId?: number
+}
+
+export type EnrollmentType = {
+    courseId: number,
+    studentId: number,
+
 }

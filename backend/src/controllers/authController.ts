@@ -2,6 +2,7 @@ import { signinSchema, singUpSchema } from "../validations/authValidation"
 import { Request, RequestHandler, Response } from 'express'
 import * as authService from '../services/authService'
 import { sign } from "../middlewares/authMidleware"
+import { createStripeCustomer } from "../utils/stripe"
 
 
 export const signUp = async (req: Request, res: Response) => {
@@ -13,12 +14,15 @@ export const signUp = async (req: Request, res: Response) => {
     }
 
     try {
+        const customer = await createStripeCustomer({ email: safeData.data.email, name: safeData.data.name })
+
         const newUser = await authService.signUp({
             cpf: safeData.data?.cpf,
             email: safeData.data.email,
             name: safeData.data.name,
             password: safeData.data.password,
-            type: safeData.data.type
+            type: safeData.data.type,
+            stripeCustomerId: customer.id
         })
 
         res.status(201).json({
@@ -29,6 +33,7 @@ export const signUp = async (req: Request, res: Response) => {
             }
         })
     } catch (error) {
+        console.log(error)
         res.status(401).json({ error: 'Aconteceu algum error!' })
     }
 }

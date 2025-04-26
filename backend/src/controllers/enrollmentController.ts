@@ -1,0 +1,65 @@
+import { Request, Response } from "express";
+import * as enrollmentService from '../services/enrollmenteService'
+import { createEnrollmentvalidation } from "../validations/enrollmentValidation";
+import { subscribeCourse } from "../models/enrollmentModel";
+import { findUserByEmail } from "../models/userModel";
+import { handleCheckoutCompleted, stripe } from "../utils/stripe";
+
+
+export const subscribe = async (req: Request, res: Response) => {
+    const safeData = createEnrollmentvalidation.safeParse(req.body)
+
+    if (!req.body) {
+        return res.status(400).json({ error: "Mande uma alguma informação" })
+    }
+
+    if (!safeData.success) {
+        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+    }
+
+    const user = await findUserByEmail(req.UserEmail as string)
+
+    if (!user) {
+        return res.status(401).json({ error: 'Usuario não logado' })
+    }
+
+    try {
+        const checkout = await enrollmentService.checkoutCart(user.email, safeData.data.courseId)
+
+        res.status(200).json(checkout)
+        await subscribeCourse({ courseId: safeData.data.courseId, studentId: user.id })
+    } catch (error) {
+        res.status(500).json({ error: 'Não foi possivel se inscrever' })
+    }
+}
+
+export const WebHook = async (req: Request, res: Response) => {
+    const pagment = req.headers['stripe-signature'] as string
+
+    let event
+    try {
+        event = stripe.webhooks.constructEvent(
+            req.body,
+            pagment,
+            process.env.STRIPE_WEBHOOK_SECRET as string
+        )
+
+        console.log('1 teste controller certo')
+    } catch (error) {
+        console.log('2 teste controller error')
+        return res.status(400).send(`Webhook Error`)
+    }
+
+    switch (event.type) {
+        case 'checkout.session.completed':
+            console.log('3 teste controller certo')
+            await handleCheckoutCompleted(event)
+            break;
+        default:
+            console.log(`Unhandled event type ${event.type}`)
+    }
+    console.log('4 teste controller certo')
+    res.send()
+}
+
+export const unsubscribeCourse = async (req: Request, res: Response) => { }
