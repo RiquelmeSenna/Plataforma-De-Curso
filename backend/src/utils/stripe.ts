@@ -65,7 +65,11 @@ export const generateCheckout = async (userId: string, email: string, courseId: 
                     },
                     quantity: 1
                 }
-            ]
+            ],
+            metadata: {
+                courseId,
+                studentId: userId
+            }
         })
 
         return {

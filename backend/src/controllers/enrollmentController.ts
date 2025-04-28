@@ -27,7 +27,7 @@ export const subscribe = async (req: Request, res: Response) => {
         const checkout = await enrollmentService.checkoutCart(user.email, safeData.data.courseId)
 
         res.status(200).json(checkout)
-        await subscribeCourse({ courseId: safeData.data.courseId, studentId: user.id })
+
     } catch (error) {
         res.status(500).json({ error: 'Não foi possivel se inscrever' })
     }
@@ -53,6 +53,18 @@ export const WebHook = async (req: Request, res: Response) => {
     switch (event.type) {
         case 'checkout.session.completed':
             console.log('3 teste controller certo')
+
+            const session = event.data.object
+            const courseId = session.metadata?.courseId
+            const studentId = session.metadata?.studentId
+
+            if (courseId && studentId) {
+                await subscribeCourse({ courseId: parseInt(courseId), studentId: parseInt(studentId) })
+                console.log('Enrollment criado com sucesso!');
+            } else {
+                console.log('Dados faltando no metadata');
+            }
+
             await handleCheckoutCompleted(event)
             break;
         default:
