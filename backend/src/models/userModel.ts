@@ -8,7 +8,13 @@ export const findUserByEmail = async (email: string) => {
             include: {
                 Enrollment: {
                     select: {
-                        course: true,
+                        course: {
+                            select: {
+                                name: true,
+                                description: true,
+                                concluded: true
+                            }
+                        }
                     }
                 },
                 Rating: {
@@ -31,7 +37,13 @@ export const findUserById = async (id: number) => {
             include: {
                 Enrollment: {
                     select: {
-                        course: true
+                        course: {
+                            select: {
+                                name: true,
+                                description: true,
+                                concluded: true
+                            }
+                        }
                     }
                 },
                 Rating: {

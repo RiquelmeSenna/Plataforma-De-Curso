@@ -31,7 +31,14 @@ export const getUserById = async (req: Request, res: Response) => {
     try {
         const user = await userService.findUserById(parseInt(safeData.data.id))
 
-        res.status(200).json(user)
+        res.status(200).json({
+            user: {
+                name: user.name,
+                type: user.type,
+                enrollment: user.Enrollment,
+                ratings: user.Rating
+            }
+        })
     } catch (error) {
         res.status(500).json({ error: 'Não foi possivel acessar o usuario' })
     }
