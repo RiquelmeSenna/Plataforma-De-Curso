@@ -68,3 +68,15 @@ export type EnrollmentType = {
     studentId: number,
 
 }
+
+export type RatingType = {
+    courseId: number
+    studentId: number
+    rating: number
+    comment?: string
+}
+
+export type UpdateRatingType = {
+    rating?: number,
+    comment?: string
+}

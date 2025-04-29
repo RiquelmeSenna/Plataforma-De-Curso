@@ -10,6 +10,7 @@ import videoRouter from './routers/videoRouter';
 import userRouter from './routers/usersRouter';
 import enrollmentRouter from './routers/enrollmentRouter';
 import webHookRouter from './routers/webHookRouter';
+import ratingRouter from './routers/ratingRouter';
 
 
 const server = express();
@@ -30,6 +31,7 @@ server.use('/modules', moduleRouter)
 server.use('/videos', videoRouter)
 server.use('/users', userRouter)
 server.use('/enrollments', enrollmentRouter)
+server.use('/ratings', ratingRouter)
 
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`);

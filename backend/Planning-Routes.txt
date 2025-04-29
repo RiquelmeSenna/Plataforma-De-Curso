@@ -48,6 +48,7 @@ Rotas :
         /videos/:id-do-video : DELETE -> Rota de Deletar Videos por ID do video
     
     Enrollment : 
+        /enrollment : POST -> Rota de Criar Inscrições
         /enrollment/:courseId : GET -> Rota de Inscrições por ID do aluno
         /enrollment/:id-da-inscricao : PUT -> Rota de Atualizar Inscrições por ID da inscrição
         /enrollment/:id-da-inscricao : DELETE -> Rota de Deletar Inscrições por ID da inscrição
@@ -56,4 +57,3 @@ Rotas :
         /reviews : POST -> Rota de Criar Reviews
         /reviews/id-do-review : PUT -> Rota de Atualizar Reviews por ID do curso e ID do review
         /reviews/id-do-review : DELETE -> Rota de Deletar Reviews por ID do curso e ID do review
-        /enrollment : POST -> Rota de Criar Inscrições

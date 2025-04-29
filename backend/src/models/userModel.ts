@@ -10,6 +10,7 @@ export const findUserByEmail = async (email: string) => {
                     select: {
                         course: {
                             select: {
+                                id: true,
                                 name: true,
                                 description: true,
                                 concluded: true
@@ -19,6 +20,7 @@ export const findUserByEmail = async (email: string) => {
                 },
                 Rating: {
                     select: {
+                        id: true,
                         comment: true,
                         course: true,
                         rating: true,
