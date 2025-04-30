@@ -27,7 +27,6 @@ export const updateUser = async (email: string, data: UpdateUser) => {
     const user = await userModel.findUserByEmail(email)
 
     if (!user) {
-        console.log('aqui 1')
         throw new Error("User is not logged")
     }
 
@@ -41,15 +40,19 @@ export const updateUser = async (email: string, data: UpdateUser) => {
         updateData.password = passwordHash
     }
 
+    const hasUser = await userModel.findUserByEmail(data.email as string)
+
 
     const updatedUser = await userModel.updateUserByEmail(user.email, {
         email: data.email,
         name: data.name,
         password: updateData.password
     })
+    if (hasUser?.email == data.email) {
+        throw new Error('Email already used')
+    }
 
     if (!updatedUser) {
-        console.log('aqui 4')
         throw new Error("It's not possible update User")
     }
 

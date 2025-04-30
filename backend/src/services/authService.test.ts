@@ -1,7 +1,7 @@
 import { describe, test, expect, afterAll } from '@jest/globals'
 import { User } from '@prisma/client'
 import * as authService from '../services/authService'
-import { createStudentUser } from '../utils/objectTest'
+import { createStudentUser, createTeacherUser } from '../utils/objectTest'
 import { createStripeCustomer } from '../utils/stripe'
 import { prisma } from '../database/prisma'
 import bcrypt from 'bcrypt'
@@ -12,7 +12,7 @@ describe("Should test all functions on service", () => {
     let userExisting: User
 
     beforeAll(async () => {
-        userExisting = await prisma.user.create({ data: await createStudentUser() })
+        userExisting = await prisma.user.create({ data: await createTeacherUser() })
     })
 
     test("Should register a new user", async () => {
