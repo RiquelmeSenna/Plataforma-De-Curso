@@ -32,7 +32,6 @@ export const signIn = async (email: string, password: string) => {
     const passwordHash = await bcrypt.compare(password, user.password)
 
     if (!passwordHash) {
-        console.log('Wrong password')
         throw new Error('Wrong password')
     }
 
