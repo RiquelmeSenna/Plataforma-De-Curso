@@ -14,7 +14,6 @@ export const createCourse = async (data: CourseType, email: string) => {
     const newCourse = await coursesModel.createCourse(data)
 
     if (!newCourse) {
-        console.log('Error creating course')
         throw new Error("It's not possible to create this course")
     }
 
@@ -40,9 +39,13 @@ export const getCourseById = async (id: number) => {
     return course
 }
 
-export const updateCourse = async (id: number, teacherId: number, data: updateCourseType) => {
-    const user = await findUserById(teacherId)
+export const updateCourse = async (id: number, email: string, data: updateCourseType) => {
+    const user = await findUserByEmail(email)
     const course = await coursesModel.getCourseById(id)
+
+    if (!course) {
+        throw new Error("Course not found")
+    }
 
     if (user?.id != course?.teacherId && user?.type != 'Admin') {
         throw new Error('You are not authorized to update this course')
@@ -57,9 +60,13 @@ export const updateCourse = async (id: number, teacherId: number, data: updateCo
     return updatedCourse
 }
 
-export const deleteCourse = async (id: number, teacherId: number) => {
-    const user = await findUserById(teacherId)
+export const deleteCourse = async (id: number, email: string) => {
+    const user = await findUserByEmail(email)
     const course = await coursesModel.getCourseById(id)
+
+    if (!course) {
+        throw new Error("Course not found")
+    }
 
     if (user?.id != course?.teacherId && user?.type != 'Admin') {
         throw new Error('You are not authorized to delete this course')

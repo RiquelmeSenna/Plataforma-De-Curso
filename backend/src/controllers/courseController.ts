@@ -168,7 +168,7 @@ export const updateCourse = async (req: Request, res: Response) => {
     if (!user) return res.status(400).json({ error: 'Usuario não encontrado' })
 
     try {
-        const updatedCourse = await courseService.updateCourse(parseInt(safeDataParams.data.id), user.id, {
+        const updatedCourse = await courseService.updateCourse(parseInt(safeDataParams.data.id), user.email, {
             categoryId: safeDataBody.data.categoryId,
             description: safeDataBody.data.description,
             name: safeDataBody.data.name,
@@ -198,7 +198,7 @@ export const deleteCourse = async (req: Request, res: Response) => {
     if (!user) return res.status(400).json({ error: 'Usuario não encontrado' })
 
     try {
-        const deletedCourse = await courseService.deleteCourse(parseInt(safeData.data.id), user.id)
+        const deletedCourse = await courseService.deleteCourse(parseInt(safeData.data.id), user.email)
         res.status(200).json({ Deleted: true })
     } catch (error) {
         res.status(500).json({ error: 'Não foi possivel deletar o curso' })
