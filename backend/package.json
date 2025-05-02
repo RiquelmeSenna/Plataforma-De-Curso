@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node --import=tsx --watch --env-file=.env src/server.ts ",
     "build": "tsc",
-    "test": "set NODE_ENV=test && jest",
+    "test": "set NODE_ENV=test && jest --runInBand",
     "start": "node dist/server.js"
   },
   "repository": {

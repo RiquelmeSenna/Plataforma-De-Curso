@@ -1,15 +1,21 @@
 import { CourseCategory, User } from "@prisma/client";
 import { createStripeCustomer } from "./stripe";
 
+export function generateRandomCpf(): string {
+    return Math.floor(Math.random() * 1000000000).toString()
+}
 
+export function generateEmail(type: string): string {
+    return `riquelme${type}${Math.floor(Math.random() * 100)}@gmail.com`
+}
 
 export const createAdminUser = async () => {
     const customer = await createStripeCustomer({ email: 'riquelmeadmin@gmail.com', name: 'Riquelme Admin' })
 
     const adminUser: User = {
         id: Math.floor(Math.random() * 100),
-        email: 'riquelmeadmin@gmail.com',
-        cpf: '06955734112',
+        email: generateEmail('Admin'),
+        cpf: generateRandomCpf(),
         name: 'Riquelme Admin',
         password: 'Senhateste123!',
         stripeCustomerId: customer.id,
@@ -24,8 +30,8 @@ export const createTeacherUser = async () => {
 
     const teacherUser: User = {
         id: Math.floor(Math.random() * 100),
-        email: 'riquelmeteacher@gmail.com',
-        cpf: '06955734114',
+        email: generateEmail('Teacher'),
+        cpf: generateRandomCpf(),
         name: 'Riquelme Teacher',
         password: 'Senhateste123!',
         stripeCustomerId: customer.id,
@@ -40,8 +46,8 @@ export const createStudentUser = async () => {
 
     const studentUser: User = {
         id: Math.floor(Math.random() * 100),
-        email: 'riquelmesenna577@gmail.com',
-        cpf: '06955734113',
+        email: generateEmail('Student'),
+        cpf: generateRandomCpf(),
         name: 'Riquelme Senna',
         password: 'Senhateste123!',
         stripeCustomerId: customer.id,
@@ -53,9 +59,9 @@ export const createStudentUser = async () => {
 
 export const createCategoryTest = async () => {
     const category: CourseCategory = {
-        id: Date.now(),
-        name: 'Desenvolvimento Web',
-        description: 'Categoria de Desenvolvimento Web'
+        id: Math.floor(Math.random() * 100),
+        name: 'Desenvolvimento de Jogos',
+        description: 'Categoria de Desenvolvimento de Jogos'
     }
 
     return category

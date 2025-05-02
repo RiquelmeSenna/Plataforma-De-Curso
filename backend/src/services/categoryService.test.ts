@@ -12,12 +12,6 @@ describe("Should test all function from category service", () => {
         adminUser = await prisma.user.create({ data: await createAdminUser() })
     })
 
-    test("Shouldn't get categories because there aren't any", async () => {
-        await expect(() => {
-            return categoryService.getCategories()
-        }).rejects.toThrow("There aren't categories")
-    })
-
     test("Should create a new Category", async () => {
         newCategory = await categoryService.newCategory(adminUser.email, {
             description: 'Categoria de curso de desenvolvimento Web',
@@ -90,6 +84,12 @@ describe("Should test all function from category service", () => {
         const deletedCategory = await categoryService.deleteCategory(adminUser.email, newCategory.id)
 
         expect(deletedCategory).toBeTruthy()
+    })
+
+    test("Shouldn't get categories because there aren't any", async () => {
+        await expect(() => {
+            return categoryService.getCategories()
+        }).rejects.toThrow("There aren't categories")
     })
 
 

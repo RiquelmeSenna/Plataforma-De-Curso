@@ -4,8 +4,24 @@ import { findUserByEmail, findUserById } from '../models/userModel'
 import { CourseType, updateCourseType } from '../types/modelsType'
 import { getCategoryById } from './categoryService'
 
+export const createCourse = async (data: CourseType, email: string) => {
+    const user = await findUserByEmail(email)
 
-export const getallCourses = async () => {
+    if (user?.type !== 'Teacher') {
+        throw new Error('You are not authorized to create this course')
+    }
+
+    const newCourse = await coursesModel.createCourse(data)
+
+    if (!newCourse) {
+        console.log('Error creating course')
+        throw new Error("It's not possible to create this course")
+    }
+
+    return newCourse
+}
+
+export const getAllCourses = async () => {
     const courses = await coursesModel.getCourses()
 
     if (courses.length < 1) {
@@ -55,24 +71,6 @@ export const deleteCourse = async (id: number, teacherId: number) => {
         throw new Error("It's not possible to delete this course")
     }
     return true
-}
-
-export const createCourse = async (data: CourseType, id: number) => {
-    const user = await findUserById(id)
-
-    if (user?.type !== 'Teacher') {
-        throw new Error('You are not authorized to create this course')
-    }
-
-
-    const newCourse = await coursesModel.createCourse(data)
-
-    if (!newCourse) {
-        console.log('Error creating course')
-        throw new Error("It's not possible to create this course")
-    }
-
-    return newCourse
 }
 
 export const getCourseByName = async (name: string) => {

@@ -3,6 +3,8 @@ import { getCourseById } from "../models/coursesModel";
 import { findUserById, updateUserByEmail } from "../models/userModel";
 import { subscribeCourse } from "../models/enrollmentModel";
 
+
+
 export const stripe = new Stripe(process.env.STRIPE_SECRET as string, {
     httpClient: Stripe.createFetchHttpClient()
 });

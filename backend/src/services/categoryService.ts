@@ -21,7 +21,7 @@ export const newCategory = async (email: string, data: CourseCategory) => {
 export const getCategories = async () => {
     const categories = await categoryModel.getCategories()
 
-    if (categories.length < 1) {
+    if (categories.length === 0) {
         throw new Error("There aren't categories")
     }
 

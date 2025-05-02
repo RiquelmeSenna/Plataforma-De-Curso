@@ -51,7 +51,7 @@ describe("Should test all functions on user service", () => {
 
     test("Shouldn't update user because email data already exist", async () => {
         await expect(() => {
-            return userService.updateUser(user.email, { email: 'riquelmesenna577@gmail.com' })
+            return userService.updateUser(user.email, { email: user.email })
         }).rejects.toThrow('Email already used')
     })
 

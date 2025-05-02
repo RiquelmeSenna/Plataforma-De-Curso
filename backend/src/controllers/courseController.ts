@@ -7,7 +7,7 @@ import { createStripePayment } from "../utils/stripe";
 
 export const getAllCourses = async (req: Request, res: Response) => {
     try {
-        const courses = await courseService.getallCourses()
+        const courses = await courseService.getAllCourses()
         res.status(200).json({
             Courses: courses.map(course => {
                 return {
@@ -138,7 +138,7 @@ export const createCourse = async (req: Request, res: Response) => {
             price: safeData.data.price,
             teacherId: user.id,
             stripeProductId: stripePayment.id
-        }, user.id)
+        }, user.email)
 
         res.status(201).json({
             course: {
