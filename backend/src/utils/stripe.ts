@@ -75,7 +75,12 @@ export const updateStripePayment = async (id: string, price?: number, name?: str
     })
 }
 
+export const archiveStripePayment = async (id: string) => {
+    const product = await stripe.products.update(id, {
+        active: false
+    })
 
+}
 
 export const generateCheckout = async (userId: string, email: string, courseId: number) => {
     const course = await getCourseById(courseId)
