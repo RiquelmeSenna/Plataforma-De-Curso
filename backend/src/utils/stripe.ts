@@ -31,17 +31,51 @@ export const createStripeCustomer = async (data: DataStripe) => {
     })
 }
 
-export const createStripePayment = async (name: string, price: number) => {
+export const createStripePayment = async (name: string, price: number, description: string) => {
     const newPayment = await stripe.products.create({
         name,
-        default_price_data: {
-            currency: 'brl',
-            unit_amount: price * 100
-        }
+        active: true,
+        description,
+
     })
+
+    const newPrice = await stripe.prices.create({
+        currency: 'brl',
+        unit_amount: price * 100,
+        product: newPayment.id
+    })
+
+    await stripe.products.update(newPayment.id, {
+        default_price: newPrice.id
+    })
+
 
     return newPayment
 }
+
+export const updateStripePayment = async (id: string, price?: number, name?: string) => {
+    const product = await stripe.products.retrieve(id)
+    const newPrice = await stripe.prices.create({
+        currency: 'brl',
+        unit_amount: price as number * 100,
+        product: id
+    })
+
+    await stripe.products.update(id, {
+        name
+    })
+
+
+    await stripe.products.update(product.id, {
+        default_price: newPrice.id
+    })
+
+    const deletedPrice = await stripe.prices.update(product.default_price as string, {
+        active: false
+    })
+}
+
+
 
 export const generateCheckout = async (userId: string, email: string, courseId: number) => {
     const course = await getCourseById(courseId)

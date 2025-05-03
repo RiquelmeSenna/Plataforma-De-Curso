@@ -3,6 +3,7 @@ import * as coursesModel from '../models/coursesModel'
 import { findUserByEmail, findUserById } from '../models/userModel'
 import { CourseType, updateCourseType } from '../types/modelsType'
 import { getCategoryById } from './categoryService'
+import { deleteStripePayment, updateStripePayment } from '../utils/stripe'
 
 export const createCourse = async (data: CourseType, email: string) => {
     const user = await findUserByEmail(email)
@@ -52,6 +53,7 @@ export const updateCourse = async (id: number, email: string, data: updateCourse
     }
 
     const updatedCourse = await coursesModel.updateCourse(id, data)
+    await updateStripePayment(updatedCourse.stripeProductId, data.price, data.name)
 
     if (!updatedCourse) {
         throw new Error("It's not possible to update this course")
@@ -73,6 +75,7 @@ export const deleteCourse = async (id: number, email: string) => {
     }
 
     const deletedCourse = await coursesModel.deleteCourse(id)
+    await deleteStripePayment(course.stripeProductId)
 
     if (!deletedCourse) {
         throw new Error("It's not possible to delete this course")

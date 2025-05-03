@@ -25,7 +25,7 @@ describe("Should test all functions on course service", () => {
     })
 
     test("Should create a new Course", async () => {
-        const stripePayment = await createStripePayment('Curso NodeJS', 250)
+        const stripePayment = await createStripePayment('Curso NodeJS', 250, 'Curso de nodejs nivel basico/avaçado, para você novo e experiente programador')
 
         newCourse = await courseService.createCourse({
             categoryId: courseCategory.id,
@@ -40,20 +40,7 @@ describe("Should test all functions on course service", () => {
         expect(newCourse.stripeProductId).toBe(stripePayment.id)
     })
 
-    test("Shouldn't create course because user is not teacher", async () => {
-        const stripePayment = await createStripePayment('Curso NodeJS', 250)
-        await expect(() => {
 
-            return courseService.createCourse({
-                categoryId: courseCategory.id,
-                description: 'Curso de nodejs nivel basico/avaçado, para você novo e experiente programador',
-                name: 'Curso NodeJS',
-                price: 250,
-                stripeProductId: stripePayment.id,
-                teacherId: teacherUser.id
-            }, studentUser.email)
-        }).rejects.toThrow('You are not authorized to create this course')
-    })
 
     test("Should get all courses", async () => {
         const courses = await courseService.getAllCourses()

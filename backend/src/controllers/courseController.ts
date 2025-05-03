@@ -129,7 +129,7 @@ export const createCourse = async (req: Request, res: Response) => {
     }
 
     try {
-        const stripePayment = await createStripePayment(safeData.data.name, safeData.data.price)
+        const stripePayment = await createStripePayment(safeData.data.name, safeData.data.price, safeData.data.description)
 
         const newCourse = await courseService.createCourse({
             categoryId: safeData.data.categoryId,

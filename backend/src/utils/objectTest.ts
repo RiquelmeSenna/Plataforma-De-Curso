@@ -1,5 +1,5 @@
 import { CourseCategory, User } from "@prisma/client";
-import { createStripeCustomer } from "./stripe";
+import { createStripeCustomer, createStripePayment } from "./stripe";
 
 export function generateRandomCpf(): string {
     return Math.floor(Math.random() * 1000000000).toString()
@@ -66,4 +66,5 @@ export const createCategoryTest = async () => {
 
     return category
 }
+
 
