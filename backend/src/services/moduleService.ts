@@ -15,7 +15,7 @@ export const getModuleById = async (id: number, email: string) => {
     }
 
     if (enrollment?.courseId != module?.courseId && user?.id != module?.course.teacherId) {
-        throw new Error("You not available for this course or you not the teacher")
+        throw new Error("You don't have access to for this course or are not the teacher")
     }
 
 
@@ -40,7 +40,7 @@ export const createModule = async (data: ModuleType, email: string) => {
     return module
 }
 
-export const updateModule = async (email: string, id: number, description: string, name: string) => {
+export const updateModule = async (email: string, id: number, description?: string, name?: string) => {
     const user = await findUserByEmail(email)
 
     const module = await moduleModel.getModuleById(id)

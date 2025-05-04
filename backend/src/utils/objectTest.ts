@@ -1,5 +1,6 @@
-import { CourseCategory, User } from "@prisma/client";
+import { Course, CourseCategory, User } from "@prisma/client";
 import { createStripeCustomer, createStripePayment } from "./stripe";
+import { date } from "zod";
 
 export function generateRandomCpf(): string {
     return Math.floor(Math.random() * 1000000000).toString()
@@ -67,4 +68,23 @@ export const createCategoryTest = async () => {
     return category
 }
 
+
+export const createCourseTest = async () => {
+    const payment = await createStripePayment('Curso de C#', 210, 'Curso de C# para você programar seus jogos')
+
+    const course: Course = {
+        id: Math.floor(Math.random() * 100),
+        categoryId: (await createCategoryTest()).id,
+        description: 'Curso de C# para você programar seus jogos',
+        name: 'Curso de C#',
+        price: 210,
+        teacherId: (await createTeacherUser()).id,
+        stripeProductId: payment.id,
+        concluded: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+    }
+
+    return course
+}
 
