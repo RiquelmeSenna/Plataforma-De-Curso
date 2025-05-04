@@ -16,7 +16,7 @@ export const getVideoById = async (id: number, email: string) => {
     }
 
     if (enrollment?.courseId != video.module.courseId && user?.id != video.module.course.teacherId) {
-        throw new Error('You not available for this course or you not the teacher')
+        throw new Error("You don't have access to for this course or are not the teacher")
     }
 
     return video

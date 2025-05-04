@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as enrollmentService from '../services/enrollmenteService'
+import * as enrollmentService from '../services/enrollmentService'
 import { createEnrollmentvalidation } from "../validations/enrollmentValidation";
 import { subscribeCourse } from "../models/enrollmentModel";
 import { findUserByEmail } from "../models/userModel";
