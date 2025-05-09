@@ -19,6 +19,10 @@ export const createRating = async (email: string, rating: number, courseId: numb
         comment
     })
 
+    if (rating > 5 || rating < 0) {
+        throw new Error("Rating max value is 5 and min value is 0")
+    }
+
     return newRating
 }
 
