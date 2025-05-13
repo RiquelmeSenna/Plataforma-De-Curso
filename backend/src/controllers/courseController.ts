@@ -27,7 +27,8 @@ export const getCourseById = async (req: Request, res: Response) => {
     const safeData = courseValidator.courseIdSchema.safeParse(req.params)
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {
@@ -50,7 +51,8 @@ export const getCourseByName = async (req: Request, res: Response) => {
     const safeData = courseValidator.courseNameSchema.safeParse(req.query)
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {
@@ -74,7 +76,8 @@ export const getReviewsByCourseId = async (req: Request, res: Response) => {
     const safeData = courseValidator.courseIdSchema.safeParse(req.params)
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {
@@ -101,7 +104,8 @@ export const getEnrollmentsByCourseId = async (req: Request, res: Response) => {
     const safeData = courseValidator.courseIdSchema.safeParse(req.params)
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {
@@ -119,13 +123,15 @@ export const createCourse = async (req: Request, res: Response) => {
     if (!req.body) res.status(400).json({ error: 'Nenhum dado foi enviado' })
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     const user = await findUserByEmail(req.UserEmail as string)
 
     if (!user) {
-        return res.status(400).json({ error: 'Usuario não encontrado' })
+        res.status(400).json({ error: 'Usuario não encontrado' })
+        return
     }
 
     try {
@@ -157,15 +163,28 @@ export const updateCourse = async (req: Request, res: Response) => {
     const safeDataBody = courseValidator.courseUpdateSchema.safeParse(req.body)
     const safeDataParams = courseValidator.courseIdSchema.safeParse(req.params)
 
-    if (!req.body) return res.status(400).json({ error: 'Nenhum dado foi enviado' })
+    if (!req.body) {
+        res.status(400).json({ error: 'Nenhum dado foi enviado' })
+        return
+    }
 
-    if (!safeDataParams.success) return res.status(400).json({ error: safeDataParams.error.flatten().fieldErrors })
+    if (!safeDataParams.success) {
+        res.status(400).json({ error: safeDataParams.error.flatten().fieldErrors })
+        return
 
-    if (!safeDataBody.success) return res.status(400).json({ error: safeDataBody.error.flatten().fieldErrors })
+    }
+
+    if (!safeDataBody.success) {
+        res.status(400).json({ error: safeDataBody.error.flatten().fieldErrors })
+        return
+    }
 
     const user = await findUserByEmail(req.UserEmail as string)
 
-    if (!user) return res.status(400).json({ error: 'Usuario não encontrado' })
+    if (!user) {
+        res.status(400).json({ error: 'Usuario não encontrado' })
+        return
+    }
 
     try {
         const updatedCourse = await courseService.updateCourse(parseInt(safeDataParams.data.id), user.email, {
@@ -191,11 +210,17 @@ export const updateCourse = async (req: Request, res: Response) => {
 export const deleteCourse = async (req: Request, res: Response) => {
     const safeData = courseValidator.courseIdSchema.safeParse(req.params)
 
-    if (!safeData.success) return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+    if (!safeData.success) {
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
+    }
 
     const user = await findUserByEmail(req.UserEmail as string)
 
-    if (!user) return res.status(400).json({ error: 'Usuario não encontrado' })
+    if (!user) {
+        res.status(400).json({ error: 'Usuario não encontrado' })
+        return
+    }
 
     try {
         const deletedCourse = await courseService.deleteCourse(parseInt(safeData.data.id), user.email)

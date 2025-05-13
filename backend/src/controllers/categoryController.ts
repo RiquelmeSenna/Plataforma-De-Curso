@@ -23,7 +23,8 @@ export const getCategory = async (req: Request, res: Response) => {
     const safeData = categorySchema.getByIdSchema.safeParse(req.params)
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {
@@ -40,19 +41,22 @@ export const updateCategory = async (req: Request, res: Response) => {
     if (!req.body) res.status(400).json({ error: "Corpo é obrigatorio!" })
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     const safeDataBody = categorySchema.updateCategorySchema.safeParse(req.body)
 
     if (!safeDataBody.success) {
-        return res.status(400).json({ error: safeDataBody.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeDataBody.error.flatten().fieldErrors })
+        return
     }
 
     const user = await findUserByEmail(req.UserEmail as string)
 
     if (!user) {
-        return res.status(400).json({ error: "User not found" })
+        res.status(400).json({ error: "User not found" })
+        return
     }
 
     try {
@@ -73,13 +77,15 @@ export const deleteCategory = async (req: Request, res: Response) => {
     const safeData = categorySchema.getByIdSchema.safeParse(req.params)
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     const user = await findUserByEmail(req.UserEmail as string)
 
     if (!user) {
-        return res.status(400).json({ error: "User not found" })
+        res.status(400).json({ error: "User not found" })
+        return
     }
 
     try {
@@ -94,17 +100,20 @@ export const createCategory = async (req: Request, res: Response) => {
     const safeData = categorySchema.createCategorySchema.safeParse(req.body)
 
     if (!req.body) {
-        return res.status(400).json({ error: "Corpo é obrigatorio!" })
+        res.status(400).json({ error: "Corpo é obrigatorio!" })
+        return
     }
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     const user = await findUserByEmail(req.UserEmail as string)
 
     if (!user) {
-        return res.status(400).json({ error: "User not found" })
+        res.status(400).json({ error: "User not found" })
+        return
     }
 
     try {
@@ -127,7 +136,8 @@ export const getCategoryByName = async (req: Request, res: Response) => {
     const safeData = categorySchema.getCategoryByNameSchema.safeParse(req.query)
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {

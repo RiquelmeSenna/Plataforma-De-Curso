@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import authRouter from './routers/authRouter';
 import categoryRouter from './routers/categoryRouter';
 import coursersRouter from './routers/courserRouter';
-import "../src/types/requestType"
+import "./types/requestType"
 import moduleRouter from './routers/moduleRouter';
 import videoRouter from './routers/videoRouter';
 import userRouter from './routers/usersRouter';

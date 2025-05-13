@@ -10,17 +10,20 @@ export const subscribe = async (req: Request, res: Response) => {
     const safeData = createEnrollmentvalidation.safeParse(req.body)
 
     if (!req.body) {
-        return res.status(400).json({ error: "Mande uma alguma informação" })
+        res.status(400).json({ error: "Mande uma alguma informação" })
+        return
     }
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     const user = await findUserByEmail(req.UserEmail as string)
 
     if (!user) {
-        return res.status(401).json({ error: 'Usuario não logado' })
+        res.status(401).json({ error: 'Usuario não logado' })
+        return
     }
 
     try {
@@ -47,7 +50,8 @@ export const WebHook = async (req: Request, res: Response) => {
         console.log('1 teste controller certo')
     } catch (error) {
         console.log('2 teste controller error')
-        return res.status(400).send(`Webhook Error`)
+        res.status(400).send(`Webhook Error`)
+        return
     }
 
     switch (event.type) {

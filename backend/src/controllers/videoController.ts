@@ -2,11 +2,12 @@ import { Request, Response } from 'express'
 import * as videoService from '../services/videoService'
 import * as videoValidation from '../validations/videoValidation'
 
-export const getVideo = async (req: Request, res: Response) => {
+export const getVideo = async (req: Request, res: Response): Promise<void> => {
     const safeData = videoValidation.videoIdSchema.safeParse(req.params)
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {
@@ -24,16 +25,17 @@ export const getVideo = async (req: Request, res: Response) => {
     }
 }
 
-export const createVideo = async (req: Request, res: Response) => {
+export const createVideo = async (req: Request, res: Response): Promise<void> => {
     const safeData = videoValidation.createVideoSchema.safeParse(req.body)
 
     if (!req.body) {
-        return res.status(400).json({ error: 'Mande algum dado!' })
+        res.status(400).json({ error: 'Mande algum dado!' })
+        return
     }
 
-
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {
@@ -51,20 +53,23 @@ export const createVideo = async (req: Request, res: Response) => {
     }
 }
 
-export const updateVideo = async (req: Request, res: Response) => {
+export const updateVideo = async (req: Request, res: Response): Promise<void> => {
     const safeDataParams = videoValidation.videoIdSchema.safeParse(req.params)
     const safeDataBody = videoValidation.updateVideoSchema.safeParse(req.body)
 
     if (!req.body) {
-        return res.status(400).json({ error: 'Mande algum dado!' })
+        res.status(400).json({ error: 'Mande algum dado!' })
+        return
     }
 
     if (!safeDataParams.success) {
-        return res.status(400).json({ error: safeDataParams.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeDataParams.error.flatten().fieldErrors })
+        return
     }
 
     if (!safeDataBody.success) {
-        return res.status(400).json({ error: safeDataBody.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeDataBody.error.flatten().fieldErrors })
+        return
     }
 
     try {
@@ -79,19 +84,18 @@ export const updateVideo = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(500).json({ error: 'Não foi possivel atualizar o video' })
     }
-
 }
 
-export const deleteVideo = async (req: Request, res: Response) => {
+export const deleteVideo = async (req: Request, res: Response): Promise<void> => {
     const safeData = videoValidation.videoIdSchema.safeParse(req.params)
 
-
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {
-        const deletedVideo = await videoService.deleteVideo(req.UserEmail as string, parseInt(safeData.data.id))
+        await videoService.deleteVideo(req.UserEmail as string, parseInt(safeData.data.id))
 
         res.status(200).json({ deleted: true })
     } catch (error) {

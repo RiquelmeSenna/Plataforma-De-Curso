@@ -6,11 +6,13 @@ export const createRating = async (req: Request, res: Response) => {
     const safeData = ratingValidation.ratingCreateSchema.safeParse(req.body)
 
     if (!req.body) {
-        return res.status(400).json({ error: 'Mande o corpo' })
+        res.status(400).json({ error: 'Mande o corpo' })
+        return
     }
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {
@@ -27,16 +29,19 @@ export const updateRating = async (req: Request, res: Response) => {
     const safeDataParams = ratingValidation.ratingIdSchema.safeParse(req.params)
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     if (!safeDataParams.success) {
-        return res.status(400).json({ error: safeDataParams.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeDataParams.error.flatten().fieldErrors })
+        return
     }
 
 
     if (!req.body) {
-        return res.status(400).json({ error: 'Mande o corpo' })
+        res.status(400).json({ error: 'Mande o corpo' })
+        return
     }
 
     try {
@@ -55,7 +60,8 @@ export const deleteRating = async (req: Request, res: Response) => {
     const safeData = ratingValidation.ratingIdSchema.safeParse(req.params)
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {

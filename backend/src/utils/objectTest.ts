@@ -1,4 +1,4 @@
-import { Course, CourseCategory, Enrollment, Module, User } from "@prisma/client";
+import { Course, CourseCategory, Enrollment, Module, Rating, User } from "@prisma/client";
 import { createStripeCustomer, createStripePayment } from "./stripe";
 import { date } from "zod";
 
@@ -108,5 +108,17 @@ export const createEnrollmentTest = async () => {
     }
 
     return enrollment
+}
+
+export const createRatingTest = async () => {
+    const rating: Rating = {
+        id: Math.floor(Math.random() * 100),
+        comment: 'Um comentario aleatorio',
+        courseId: (await createCourseTest()).id,
+        rating: 5,
+        studentId: (await createStudentUser()).id
+    }
+
+    return rating
 }
 

@@ -7,7 +7,8 @@ export const getModuleById = async (req: Request, res: Response) => {
     const safeData = moduleValidator.moduleByIdSchema.safeParse(req.params);
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {
@@ -29,17 +30,20 @@ export const createModule = async (req: Request, res: Response) => {
     const safeData = moduleValidator.createModuleSchema.safeParse(req.body);
 
     if (!req.body) {
-        return res.status(400).json({ error: 'Mande algum dado' })
+        res.status(400).json({ error: 'Mande algum dado' })
+        return
     }
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
 
     const user = await findUserByEmail(req.UserEmail as string)
 
     if (!user) {
-        return res.status(404).json({ error: 'Usuario não encontrado' })
+        res.status(404).json({ error: 'Usuario não encontrado' })
+        return
     }
 
     try {
@@ -66,17 +70,20 @@ export const updateModule = async (req: Request, res: Response) => {
     const safeDataParams = moduleValidator.moduleByIdSchema.safeParse(req.params);
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     if (!safeDataParams.success) {
-        return res.status(400).json({ error: safeDataParams.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeDataParams.error.flatten().fieldErrors })
+        return
     }
 
     const user = await findUserByEmail(req.UserEmail as string)
 
     if (!user) {
-        return res.status(404).json({ error: 'Usuario não encontrado' })
+        res.status(404).json({ error: 'Usuario não encontrado' })
+        return
     }
 
     try {
@@ -98,13 +105,15 @@ export const deleteModule = async (req: Request, res: Response) => {
     const safeData = moduleValidator.moduleByIdSchema.safeParse(req.params)
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     const user = await findUserByEmail(req.UserEmail as string)
 
     if (!user) {
-        return res.status(400).json({ error: 'Usuario não encontrado' })
+        res.status(400).json({ error: 'Usuario não encontrado' })
+        return
     }
 
     try {

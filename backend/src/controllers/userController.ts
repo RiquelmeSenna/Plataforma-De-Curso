@@ -25,7 +25,8 @@ export const getUserById = async (req: Request, res: Response) => {
     const safeData = userValidation.userIdSchema.safeParse(req.params)
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {
@@ -48,11 +49,13 @@ export const updateUser = async (req: Request, res: Response) => {
     const safeData = userValidation.updateUserSchema.safeParse(req.body)
 
     if (!req.body) {
-        return res.status(400).json({ error: "Mande alguma informação" })
+        res.status(400).json({ error: "Mande alguma informação" })
+        return
     }
 
     if (!safeData.success) {
-        return res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
     }
 
     try {
