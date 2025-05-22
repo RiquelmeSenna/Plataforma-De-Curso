@@ -21,6 +21,7 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(helmet());
 server.use(express.static('public'));
+server.use(cors({ exposedHeaders: 'Authorization' }))
 
 const port = process.env.PORT || 4000
 
