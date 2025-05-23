@@ -3,7 +3,7 @@ import z from 'zod'
 export const singUpSchema = z.object({
     name: z.string({ message: "Mande o nome do usuario" }).min(2, { message: 'Nome no minimo com 2 caracteres' }),
     email: z.string({ message: 'Mand eum E-mail' }).email({ message: 'Mande um E-mail válido' }),
-    cpf: z.string({ message: 'Mande um CPF' }),
+    cpf: z.string({ message: 'Mande um CPF' }).min(11, { message: 'Mande um CPF válido' }),
     password: z.string().regex(
         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$!*&@#])[0-9a-zA-Z$!*&@#]{8,}$/,
         {

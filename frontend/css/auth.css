@@ -17,7 +17,7 @@
 }
 
 main {
-    height: 70%;
+    height: 75%;
     width: 25%;
     border-radius: 10%;
     background: rgba(255, 255, 255, .1);
@@ -53,6 +53,13 @@ main #box {
 
 #inputs input::placeholder {
     color: #ccc;
+}
+
+.error {
+    color: rgb(248, 81, 81);
+    font-size: 11px;
+    margin-left: 2px;
+    display: none;
 }
 
 main div img {

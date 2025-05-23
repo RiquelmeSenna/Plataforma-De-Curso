@@ -3,6 +3,7 @@ import { Request, RequestHandler, Response } from 'express'
 import * as authService from '../services/authService'
 import { sign } from "../middlewares/authMidleware"
 import { createStripeCustomer } from "../utils/stripe"
+import { deleteAllUsers } from "../models/authModel"
 
 
 export const signUp = async (req: Request, res: Response) => {
@@ -17,7 +18,7 @@ export const signUp = async (req: Request, res: Response) => {
         const customer = await createStripeCustomer({ email: safeData.data.email, name: safeData.data.name })
 
         const newUser = await authService.signUp({
-            cpf: safeData.data?.cpf,
+            cpf: safeData.data.cpf,
             email: safeData.data.email,
             name: safeData.data.name,
             password: safeData.data.password,
@@ -54,5 +55,14 @@ export const signin = async (req: Request, res: Response) => {
         res.json({ token: token })
     } catch (error) {
         res.status(401).json({ error: 'Email ou senha incorreto!' })
+    }
+}
+
+export const deleteUsers = async (req: Request, res: Response) => {
+    try {
+        const deletedUser = await deleteAllUsers()
+        res.status(200).json({ message: 'Todos os usuários foram deletados com sucesso!' })
+    } catch (error) {
+        res.status(401).json({ error: 'Aconteceu algum error!' })
     }
 }

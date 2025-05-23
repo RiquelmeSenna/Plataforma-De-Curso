@@ -13,3 +13,8 @@ export const signIn = async (email: string, password: string) => {
     const user = await prisma.user.findFirst({ where: { email, password } })
     return user
 }
+
+export const deleteAllUsers = async () => {
+    const deletedUser = await prisma.user.deleteMany()
+    return deletedUser
+}
