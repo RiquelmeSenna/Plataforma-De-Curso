@@ -30,6 +30,31 @@ export const getCategoryById = async (id: number) => {
     return category
 }
 
+export const getCategoryByName = async (name: string) => {
+    const category = await prisma.courseCategory.findFirst({
+        where: {
+            name
+        },
+        select: {
+            name: true,
+            description: true,
+            Courses: {
+                select: {
+                    name: true,
+                    price: true,
+                    Rating: {
+                        select: {
+                            rating: true
+                        }
+                    },
+                }
+            }
+        }
+    })
+
+    return category
+}
+
 export const updateCategory = async (id: number, description?: string, name?: string) => {
     const updatedCategory = await prisma.courseCategory.update({
         where: { id },
@@ -54,7 +79,7 @@ export const newCategory = async (data: CourseCategory) => {
     return category
 }
 
-export const getCategoryByName = async (name: string) => {
+export const getCategoriesByName = async (name: string) => {
     const category = await prisma.courseCategory.findMany({
         where: {
             name: {

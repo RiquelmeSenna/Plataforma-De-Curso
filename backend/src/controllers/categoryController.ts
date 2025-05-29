@@ -35,6 +35,22 @@ export const getCategory = async (req: Request, res: Response) => {
     }
 }
 
+export const getCategoryByName = async (req: Request, res: Response) => {
+    const safeData = categorySchema.getCategoryByNameSchema.safeParse(req.params)
+
+    if (!safeData.success) {
+        res.status(400).json({ error: safeData.error.flatten().fieldErrors })
+        return
+    }
+
+    try {
+        const category = await categoryService.getCategoryByName(safeData.data.name)
+        res.status(200).json(category)
+    } catch (error) {
+        res.status(500).json({ message: "Error ao achar a categoria" });
+    }
+}
+
 export const updateCategory = async (req: Request, res: Response) => {
     const safeData = categorySchema.getByIdSchema.safeParse(req.params)
 
@@ -128,11 +144,12 @@ export const createCategory = async (req: Request, res: Response) => {
             }
         })
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: "Error de criar a categoria" });
     }
 }
 
-export const getCategoryByName = async (req: Request, res: Response) => {
+export const getCategoriesByName = async (req: Request, res: Response) => {
     const safeData = categorySchema.getCategoryByNameSchema.safeParse(req.query)
 
     if (!safeData.success) {
@@ -141,7 +158,7 @@ export const getCategoryByName = async (req: Request, res: Response) => {
     }
 
     try {
-        const categories = await categoryService.getCategoryByName(safeData.data.name)
+        const categories = await categoryService.getCategoriesByName(safeData.data.name)
         res.status(200).json({
             categories: categories.map((category) => {
                 return {

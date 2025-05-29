@@ -38,6 +38,15 @@ export const getCategoryById = async (id: number) => {
     return category
 }
 
+export const getCategoryByName = async (name: string) => {
+    const category = await categoryModel.getCategoryByName(name)
+
+    if (!category) {
+        throw new Error('Category not exist')
+    }
+    return category
+}
+
 export const updateCategory = async (email: string, id: number, description?: string, name?: string) => {
     const user = await findUserByEmail(email)
 
@@ -75,8 +84,8 @@ export const deleteCategory = async (email: string, id: number) => {
     return true
 }
 
-export const getCategoryByName = async (name: string) => {
-    const categories = await categoryModel.getCategoryByName(name)
+export const getCategoriesByName = async (name: string) => {
+    const categories = await categoryModel.getCategoriesByName(name)
 
     if (categories.length < 1) {
         throw new Error('Categories not exist')
