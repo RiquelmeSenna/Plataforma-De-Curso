@@ -78,9 +78,8 @@ header .container {
     position: absolute;
     background-color: white;
     width: 220px;
-    height: 100vh;
     margin-left: 60px;
-    margin-top: 0vh;
+    margin-top: -250vh;
     transition: all ease 1s;
 }
 
@@ -188,6 +187,97 @@ footer {
 
 .footer-nav a:hover {
     color: #f1c40f;
+}
+
+.courses {
+    background-color: #f5f5dc;
+}
+
+.courses ul {
+    margin-top: -50px;
+    list-style: none;
+    padding: 10px;
+}
+
+.courses ul li {
+    display: flex;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.courses ul li img {
+    width: 430px;
+    height: 230px;
+    border-radius: 10px;
+}
+
+.courses ul li .courses-text {
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+#name {
+    font-size: 30px;
+}
+
+#description {
+    margin-top: 20px;
+}
+
+#teacher {
+    font-size: 13px;
+    color: #888;
+    margin-top: 10px;
+}
+
+#price {
+    margin-left: 15%;
+    font-size: 18px;
+}
+
+#price span {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+
+#rating {
+    display: flex;
+    margin-top: 10px;
+}
+
+#note {
+    color: rgb(129, 113, 21);
+    font-weight: 600;
+}
+
+.stars {
+    width: 15px;
+    height: 15px;
+    margin-left: 3px;
+    background: rgb(197, 168, 5);
+    clip-path: polygon(50% 0%,
+            61% 35%,
+            98% 35%,
+            68% 57%,
+            79% 91%,
+            50% 70%,
+            21% 91%,
+            32% 57%,
+            2% 35%,
+            39% 35%);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.stars:first-of-type {
+    margin-left: 10px;
+}
+
+#category {
+    margin-top: 10px;
+    font-weight: 600;
 }
 
 

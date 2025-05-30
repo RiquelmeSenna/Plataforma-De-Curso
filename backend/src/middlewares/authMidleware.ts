@@ -8,31 +8,28 @@ export const sign = async (email: string) => {
 }
 
 
-export const authMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const header = req.headers['authorization'];
-
+export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+    const header = req.headers['authorization']
     if (!header) {
-        res.status(401).json({ error: 'Mande um header de autorização' });
-        return
+        return res.json({ error: 'Mande um header de autorização' })
     }
 
-    const token = header.split(' ')[1];
-
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { email: string };
-        const user = await findUserByEmail(decoded.email);
-
-        if (!user) {
-            res.status(404).json({ error: 'Usuário não encontrado' });
-            return
+    const token = header.split(' ')[1]
+    const verify = jwt.verify(token, process.env.JWT_SECRET as string,
+        async (error: any, decoded: any) => {
+            if (error) return res.status(401).json({ error: 'Mande um token válido' })
+            try {
+                const email = decoded
+                const user = await findUserByEmail(email)
+                if (!user) {
+                    return res.status(400).json({ error: 'Usuario não encontrado' })
+                }
+                req.UserEmail = user.email
+                next()
+            } catch (error) {
+                res.status(401).json({ error: 'Token inválido' })
+            }
         }
-
-        req.UserEmail = decoded.email;
-        next();
-
-    } catch (error) {
-        res.status(401).json({ error: 'Token inválido ou expirado' });
-        return
-    }
-};
+    )
+}
 

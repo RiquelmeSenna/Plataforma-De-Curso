@@ -31,14 +31,15 @@ async function addCategories() {
         list.append(item.name)
         categoriesList.appendChild(list)
         list.addEventListener('click', async () => {
-            console.log(list.innerHTML)
-
             const url = `http://localhost:4000/categories/find/${list.innerHTML}`
 
             const category = await fetch(url)
 
             const response = await category.json()
-            console.log(response)
+            if (response) {
+                localStorage.setItem('category', JSON.stringify(response))
+
+            }
         })
     })
 }
@@ -47,3 +48,18 @@ addCategories()
 
 changeName()
 
+explore.addEventListener('mouseover', () => {
+    categoriesDiv.style.marginTop = '0'
+})
+
+explore.addEventListener('mouseout', () => {
+    categoriesDiv.style.marginTop = '-150vh'
+})
+
+categoriesDiv.addEventListener('mouseover', () => {
+    categoriesDiv.style.marginTop = '0'
+})
+
+categoriesDiv.addEventListener('mouseout', () => {
+    categoriesDiv.style.marginTop = '-150vh'
+})
