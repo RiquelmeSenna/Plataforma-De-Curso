@@ -40,11 +40,23 @@ export const getCategoryByName = async (name: string) => {
             description: true,
             Courses: {
                 select: {
+                    id: true,
                     name: true,
                     price: true,
+                    description: true,
+                    category: {
+                        select: {
+                            name: true
+                        }
+                    },
+                    teacher: {
+                        select: {
+                            name: true
+                        }
+                    },
                     Rating: {
                         select: {
-                            rating: true
+                            rating: true,
                         }
                     },
                 }

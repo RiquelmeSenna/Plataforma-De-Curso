@@ -205,10 +205,11 @@ footer {
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 15px;
+    cursor: pointer;
 }
 
 .courses ul li img {
-    width: 430px;
+    width: 400px;
     height: 230px;
     border-radius: 10px;
 }
@@ -233,8 +234,9 @@ footer {
 }
 
 #price {
-    margin-left: 15%;
     font-size: 18px;
+    position: absolute;
+    margin-left: 80%;
 }
 
 #price span {

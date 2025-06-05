@@ -11,18 +11,23 @@ export const sign = async (email: string) => {
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     const header = req.headers['authorization']
     if (!header) {
-        return res.json({ error: 'Mande um header de autorização' })
+        res.json({ error: 'Mande um header de autorização' })
+        return
     }
 
     const token = header.split(' ')[1]
     const verify = jwt.verify(token, process.env.JWT_SECRET as string,
         async (error: any, decoded: any) => {
-            if (error) return res.status(401).json({ error: 'Mande um token válido' })
+            if (error) {
+                res.status(401).json({ error: 'Mande um token válido' })
+                return
+            }
             try {
                 const email = decoded
                 const user = await findUserByEmail(email)
                 if (!user) {
-                    return res.status(400).json({ error: 'Usuario não encontrado' })
+                    res.status(400).json({ error: 'Usuario não encontrado' })
+                    return
                 }
                 req.UserEmail = user.email
                 next()

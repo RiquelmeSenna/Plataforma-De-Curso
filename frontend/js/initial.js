@@ -4,6 +4,7 @@ let explore = document.querySelector('.explore')
 let categoriesDiv = document.querySelector('.categories')
 let categoriesList = document.querySelector('.categories ul')
 
+
 async function changeName() {
     const url = 'http://localhost:4000/users/me'
 
@@ -38,7 +39,7 @@ async function addCategories() {
             const response = await category.json()
             if (response) {
                 localStorage.setItem('category', JSON.stringify(response))
-
+                window.location.replace('../home/categories.html')
             }
         })
     })
@@ -47,7 +48,6 @@ async function addCategories() {
 addCategories()
 
 changeName()
-
 explore.addEventListener('mouseover', () => {
     categoriesDiv.style.marginTop = '0'
 })
@@ -63,3 +63,78 @@ categoriesDiv.addEventListener('mouseover', () => {
 categoriesDiv.addEventListener('mouseout', () => {
     categoriesDiv.style.marginTop = '-150vh'
 })
+
+async function addCategory() {
+    let courses = JSON.parse(localStorage.getItem('category'))
+
+    const ul = document.querySelector('.courses ul')
+    const coursesDiv = document.querySelector('.courses')
+
+    if (courses.Courses.length == 0) {
+        ul.innerHTML = 'Não há cursos nessa categoria'
+        ul.style.fontSize = '30px'
+        ul.style.textAlign = 'center'
+        ul.style.marginTop = '20px'
+        coursesDiv.style.backgroundColor = 'white'
+        return
+    }
+
+    courses.Courses.forEach(item => {
+        let li = document.createElement('li')
+
+        let img = document.createElement('img')
+        img.src = '../../images/Fundo Azul Liso Papel de Parede Para Download Gratuito - Pngtree..png'
+
+        // Div de texto
+        let divLi = document.createElement('div')
+        divLi.classList.add('courses-text')
+        let h2 = document.createElement('h2')
+        h2.id = 'name'
+        let h4 = document.createElement('h4')
+        h4.id = 'description'
+        let p = document.createElement('p')
+        p.id = 'teacher'
+        let divRating = document.createElement('div')
+        divRating.id = 'rating'
+        let note = document.createElement('p')
+        note.id = 'note'
+        let stars = document.createElement('div')
+        stars.classList.add('stars')
+        let category = document.createElement('p')
+        category.id = 'category'
+        category.innerHTML = item.category.name
+        h2.innerHTML = item.name
+        h4.innerHTML = item.description
+        p.innerHTML = item.teacher.name
+        note.innerHTML = '0'
+        divRating.appendChild(note)
+        divRating.appendChild(stars)
+        divLi.appendChild(h2)
+        divLi.appendChild(h4)
+        divLi.appendChild(p)
+        divLi.appendChild(divRating)
+        divLi.appendChild(category)
+        ///////////////////////
+
+        // Price
+        let price = document.createElement('p')
+        price.id = 'price'
+        price.innerHTML = `R$<span>${item.price.toFixed(2)}</span>`
+        ///////////
+
+        li.appendChild(img)
+        li.appendChild(divLi)
+        li.appendChild(price)
+        ul.appendChild(li)
+
+        li.addEventListener('click', () => {
+            const selectedCourse = courses.Courses.find(course => course.name === item.name)
+            if (selectedCourse) {
+                localStorage.setItem('idCourse', selectedCourse.id)
+                window.location.replace('../home/course.html')
+            }
+        })
+    })
+}
+
+addCategory()
