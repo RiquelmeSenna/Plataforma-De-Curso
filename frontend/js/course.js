@@ -3,8 +3,12 @@ let userName = document.querySelector('#user p')
 let explore = document.querySelector('.explore')
 let categoriesDiv = document.querySelector('.categories')
 let categoriesList = document.querySelector('.categories ul')
+let userDiv = document.querySelector('#user')
 
-console.log(token)
+
+userDiv.addEventListener('click', () => {
+    window.location.replace('../../pages/home/user.html')
+})
 
 async function changeName() {
     const url = 'http://localhost:4000/users/me'

@@ -11,6 +11,7 @@ export type UpdateUser = {
     name?: string,
     email?: string,
     password?: string,
+    type?: 'Student' | 'Teacher'
     stripeCustomerId?: string
 }
 

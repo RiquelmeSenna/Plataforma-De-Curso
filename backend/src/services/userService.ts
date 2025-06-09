@@ -32,7 +32,8 @@ export const updateUser = async (email: string, data: UpdateUser) => {
 
     const updateData: Partial<UpdateUser> = {
         name: data.name,
-        email: data.email
+        email: data.email,
+        type: data.type
     }
 
     if (data.password) {
@@ -42,11 +43,11 @@ export const updateUser = async (email: string, data: UpdateUser) => {
 
     const hasUser = await userModel.findUserByEmail(data.email as string)
 
-
     const updatedUser = await userModel.updateUserByEmail(user.email, {
         email: data.email,
         name: data.name,
-        password: updateData.password
+        password: updateData.password,
+        type: data.type
     })
     if (hasUser?.email == data.email) {
         throw new Error('Email already used')

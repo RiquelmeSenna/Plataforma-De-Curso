@@ -13,4 +13,5 @@ export const updateUserSchema = z.object({
             message:
                 "A senha deve conter pelo menos 8 caracteres, incluindo letra maiúscula, minúscula, número e caractere especial",
         }).optional(),
+    type: z.enum(['Student', 'Teacher']).optional(),
 })

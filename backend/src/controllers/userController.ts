@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import * as userService from '../services/userService'
 import * as userValidation from '../validations/userValidation'
+import { use } from 'passport'
 
 
 export const getMe = async (req: Request, res: Response) => {
@@ -13,7 +14,8 @@ export const getMe = async (req: Request, res: Response) => {
                 cpf: user.cpf,
                 email: user.email,
                 enrollment: user.Enrollment,
-                rating: user.Rating
+                rating: user.Rating,
+                type: user.type
             }
         })
     } catch (error) {
@@ -62,7 +64,8 @@ export const updateUser = async (req: Request, res: Response) => {
         const updatedUser = await userService.updateUser(req.UserEmail as string, {
             email: safeData.data.email,
             name: safeData.data.name,
-            password: safeData.data.password
+            password: safeData.data.password,
+            type: safeData.data.type
         })
 
         res.status(200).json({ user: updatedUser })
