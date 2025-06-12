@@ -4,7 +4,8 @@ let explore = document.querySelector('.explore')
 let categoriesDiv = document.querySelector('.categories')
 let categoriesList = document.querySelector('.categories ul')
 let userDiv = document.querySelector('#user')
-
+let studentPanel = document.querySelector('#student-panel')
+let teacherPanel = document.querySelector("#teacher-panel")
 
 userDiv.addEventListener('click', () => {
     window.location.replace('../../pages/home/user.html')
@@ -25,11 +26,14 @@ async function changeName() {
     if (response.user.type == 'Teacher') {
         let bottomCreate = document.querySelector('#create-course')
         bottomCreate.style.display = 'block'
+        studentPanel.style.display = 'none'
+        teacherPanel.style.display = 'block'
     }
+
 }
 
-
 async function addCategories() {
+    // Categorias Header
     const url = 'http://localhost:4000/categories'
 
     const categories = await fetch(url)
@@ -52,10 +56,21 @@ async function addCategories() {
             }
         })
     })
+
+    //Categorias selecionar
+
+    let selectCoursecategory = document.querySelector('#course-category')
+
+    response.categories.forEach((item) => {
+        let options = document.createElement('option')
+        options.append(item.name)
+        selectCoursecategory.appendChild(options)
+    })
 }
 
 addCategories()
 
+changeName()
 explore.addEventListener('mouseover', () => {
     categoriesDiv.style.marginTop = '0'
 })
@@ -72,56 +87,18 @@ categoriesDiv.addEventListener('mouseout', () => {
     categoriesDiv.style.marginTop = '-150vh'
 })
 
+async function moduleName(params) {
+    const url = `http://localhost:4000/users/me`
 
-
-async function courseInfo() {
-    const courseId = localStorage.getItem('idCourse')
-    const url = `http://localhost:4000/courses/${courseId}`
-
-    const course = await fetch(url)
-    const response = await course.json()
-
-    const courseCategory = document.querySelector('.course-category-badge')
-    const courseTittle = document.querySelector('.course-title')
-    const courseDescription = document.querySelector('.course-description')
-    const coursePrice = document.querySelector('.course-price')
-    const listModule = document.querySelector('.modules-list')
-
-    response.course.module.forEach((item, index) => {
-        //Criar os elementos
-        const li = document.createElement('li')
-        const number = document.createElement('div')
-        number.innerHTML = index + 1
-        number.classList.add('module-number')
-        const divText = document.createElement('div')
-        const title = document.createElement('span')
-        title.classList.add('module-title')
-        const description = document.createElement('span')
-        description.classList.add('module-desc')
-
-        //Colocar os textos nos elementos
-
-        title.innerHTML = item.name
-        description.innerHTML = item.description
-
-        //Colocar um elemento dentro do outro
-
-        divText.appendChild(title)
-        divText.appendChild(description)
-        li.appendChild(number)
-        li.appendChild(divText)
-        listModule.appendChild(li)
-
+    const user = await fetch(url, {
+        headers: {
+            'Content-type': 'Application/json',
+            'Authorization': `bearer ${token}`
+        }
     })
 
-    courseCategory.innerHTML = response.course.category.name
-    courseTittle.innerHTML = response.course.name
-    console.log(response.course.description)
-    courseDescription.innerHTML = response.course.description
-    coursePrice.innerHTML = `R$ ${response.course.price},00`
+    const response = await user.json()
+    console.log(response)
 }
 
-
-
-courseInfo()
-changeName()
+moduleName()

@@ -116,6 +116,30 @@ export const getEnrollmentsByCourseId = async (req: Request, res: Response) => {
     }
 }
 
+export const getCoursesByTeacherId = async (req: Request, res: Response) => {
+    const user = await findUserByEmail(req.UserEmail as string)
+
+    if (!user) {
+        res.status(400).json({ error: 'Usuario não encontrado' })
+        return
+    }
+    try {
+        const courses = await courseService.getCoursesByTeacherId(user.id)
+        res.status(200).json({
+            Courses: courses.map(course => {
+                return {
+                    name: course.name,
+                    description: course.description,
+                    price: course.price,
+                    category: course.category.name,
+                    module: course.Module.map(module => module)
+                }
+            })
+        })
+    } catch (error) {
+        res.status(500).json({ error: 'Não foi possivel achar os cursos do professor' })
+    }
+}
 
 export const createCourse = async (req: Request, res: Response) => {
     const safeData = courseValidator.newCourseSchema.safeParse(req.body)

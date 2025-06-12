@@ -36,6 +36,7 @@ export const getCategoryByName = async (name: string) => {
             name
         },
         select: {
+            id: true,
             name: true,
             description: true,
             Courses: {

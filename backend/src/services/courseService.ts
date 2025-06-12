@@ -40,6 +40,21 @@ export const getCourseById = async (id: number) => {
     return course
 }
 
+export const getCoursesByTeacherId = async (teacherId: number) => {
+    const courses = await coursesModel.getCoursesByTeacherId(teacherId)
+    const user = await findUserById(teacherId)
+    if (!user) {
+        throw new Error('User not found')
+    }
+    if (user.type !== 'Teacher') {
+        throw new Error('You are not authorized to view these courses')
+    }
+    if (courses.length < 1) {
+        throw new Error('No courses found for this teacher')
+    }
+    return courses
+}
+
 export const updateCourse = async (id: number, email: string, data: updateCourseType) => {
     const user = await findUserByEmail(email)
     const course = await coursesModel.getCourseById(id)

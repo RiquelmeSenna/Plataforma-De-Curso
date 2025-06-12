@@ -7,6 +7,7 @@ const coursersRouter = Router()
 
 coursersRouter.get('/', courseController.getAllCourses)
 coursersRouter.get('/search', courseController.getCourseByName)
+coursersRouter.get('/teacher', authMiddleware, courseController.getCoursesByTeacherId)
 coursersRouter.get('/:id', courseController.getCourseById)
 coursersRouter.get('/:id/reviews', courseController.getReviewsByCourseId)
 coursersRouter.get('/:id/enrollments', courseController.getEnrollmentsByCourseId)

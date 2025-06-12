@@ -14,6 +14,27 @@ export const getCourses = async () => {
     return courses
 }
 
+export const getCoursesByTeacherId = async (teacherId: number) => {
+    const courses = await prisma.course.findMany({
+        where: { teacherId },
+        include: {
+            Module: {
+                select: {
+                    name: true,
+                    description: true,
+                }
+            },
+            category: {
+                select: {
+                    name: true
+                }
+            }
+        }
+    })
+
+    return courses
+}
+
 export const getCourseById = async (id: number) => {
     const course = await prisma.course.findFirst({
         where: { id },

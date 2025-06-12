@@ -4,7 +4,7 @@ let explore = document.querySelector('.explore')
 let categoriesDiv = document.querySelector('.categories')
 let categoriesList = document.querySelector('.categories ul')
 let userDiv = document.querySelector('#user')
-
+let buttonCreate = document.querySelector('.btn-create-course')
 
 userDiv.addEventListener('click', () => {
     window.location.replace('../../pages/home/user.html')
@@ -26,10 +26,11 @@ async function changeName() {
         let bottomCreate = document.querySelector('#create-course')
         bottomCreate.style.display = 'block'
     }
+
 }
 
-
 async function addCategories() {
+    // Categorias Header
     const url = 'http://localhost:4000/categories'
 
     const categories = await fetch(url)
@@ -52,10 +53,21 @@ async function addCategories() {
             }
         })
     })
+
+    //Categorias selecionar
+
+    let selectCoursecategory = document.querySelector('#course-category')
+
+    response.categories.forEach((item) => {
+        let options = document.createElement('option')
+        options.append(item.name)
+        selectCoursecategory.appendChild(options)
+    })
 }
 
 addCategories()
 
+changeName()
 explore.addEventListener('mouseover', () => {
     categoriesDiv.style.marginTop = '0'
 })
@@ -74,54 +86,56 @@ categoriesDiv.addEventListener('mouseout', () => {
 
 
 
-async function courseInfo() {
-    const courseId = localStorage.getItem('idCourse')
-    const url = `http://localhost:4000/courses/${courseId}`
+buttonCreate.addEventListener('click', async (e) => {
+    e.preventDefault()
+    const urlPost = 'http://localhost:4000/courses'
 
-    const course = await fetch(url)
-    const response = await course.json()
 
-    const courseCategory = document.querySelector('.course-category-badge')
-    const courseTittle = document.querySelector('.course-title')
-    const courseDescription = document.querySelector('.course-description')
-    const coursePrice = document.querySelector('.course-price')
-    const listModule = document.querySelector('.modules-list')
+    let courseTitle = document.querySelector('#course-title')
+    let courseDescription = document.querySelector("#course-description")
+    let courseCategory = document.querySelector('#course-category')
+    let coursePrice = document.querySelector('#course-price')
 
-    response.course.module.forEach((item, index) => {
-        //Criar os elementos
-        const li = document.createElement('li')
-        const number = document.createElement('div')
-        number.innerHTML = index + 1
-        number.classList.add('module-number')
-        const divText = document.createElement('div')
-        const title = document.createElement('span')
-        title.classList.add('module-title')
-        const description = document.createElement('span')
-        description.classList.add('module-desc')
+    const urlCategory = `http://localhost:4000/categories/find/${courseCategory.value}`
 
-        //Colocar os textos nos elementos
+    const category = await fetch(urlCategory)
+    const responseCategory = await category.json()
 
-        title.innerHTML = item.name
-        description.innerHTML = item.description
+    const data = {
+        name: courseTitle.value,
+        description: courseDescription.value,
+        categoryId: responseCategory.id,
+        price: parseInt(coursePrice.value)
+    }
+    let error = document.querySelectorAll('.error')
 
-        //Colocar um elemento dentro do outro
+    if (data.name.length < 4) {
+        error[0].innerHTML = 'O nome deve ter no mínimo 4 caracteres'
+    } else {
+        error[0].innerHTML = ''
+    }
+    if (data.description.length < 10) {
+        error[1].innerHTML = 'A descrição deve ter no mínimo 10 caracteres'
+    } else {
+        error[1].innerHTML = ''
+    }
+    if (data.price < 1) {
+        error[2].innerHTML = 'O preço deve ser maior que 0'
+    } else {
+        error[2].innerHTML = ''
+    }
 
-        divText.appendChild(title)
-        divText.appendChild(description)
-        li.appendChild(number)
-        li.appendChild(divText)
-        listModule.appendChild(li)
 
+    let newCourse = await fetch(urlPost, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(data)
     })
 
-    courseCategory.innerHTML = response.course.category.name
-    courseTittle.innerHTML = response.course.name
-    console.log(response.course.description)
-    courseDescription.innerHTML = response.course.description
-    coursePrice.innerHTML = `R$ ${response.course.price},00`
-}
+    const response = await newCourse.json()
+    console.log(response)
 
-
-
-courseInfo()
-changeName()
+})

@@ -20,6 +20,10 @@ async function changeName() {
 
     const response = await user.json()
     userName.innerHTML = response.user.name
+    if (response.user.type == 'Teacher') {
+        let bottomCreate = document.querySelector('#create-course')
+        bottomCreate.style.display = 'block'
+    }
 
 }
 
