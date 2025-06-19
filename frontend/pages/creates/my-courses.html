@@ -49,6 +49,23 @@
         <!-- Painel do Professor -->
         <section id="teacher-panel" style="display: none;">
             <h2>Cursos que Gerencio</h2>
+            <!-- Exemplo de modal de adicionar módulo -->
+            <div id="add-module-modal">
+                <form class="add-module-form">
+                    <label for="module-title">Título do Módulo</label>
+                    <input type="text" id="module-title" name="module-title" placeholder="Digite o título do módulo" />
+                    <p class="error"></p>
+
+                    <label for="module-desc">Descrição</label>
+                    <textarea id="module-desc" name="module-desc"
+                        placeholder="Descreva o conteúdo do módulo"></textarea>
+                    <p class="error"></p>
+                    <div class="add-module-actions">
+                        <button type="button" id="cancel-add-module">Cancelar</button>
+                        <button type="button" id="confirm-add-module">Adicionar</button>
+                    </div>
+                </form>
+            </div>
         </section>
     </main>
 </body>

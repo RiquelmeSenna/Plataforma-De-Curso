@@ -212,6 +212,105 @@ progress {
     border-bottom: none;
 }
 
+/* Modal de adicionar módulo */
+#add-module-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(30, 30, 47, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+#add-module-modal.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.add-module-form {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 16px rgba(30, 30, 47, 0.13);
+    padding: 32px 28px 22px 28px;
+    min-width: 320px;
+    max-width: 95vw;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.add-module-form label {
+    font-size: 1rem;
+    color: #39396b;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.add-module-form input[type="text"],
+.add-module-form textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #c7c7e6;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: #f7f7fa;
+    margin-bottom: 8px;
+    resize: none;
+}
+
+.error {
+    margin-top: -18px;
+    color: rgb(250, 75, 75);
+    font-size: 12px;
+}
+
+.add-module-form textarea {
+    min-height: 60px;
+    max-height: 120px;
+}
+
+.add-module-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+#confirm-add-module,
+#cancel-add-module {
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#confirm-add-module {
+    background: #4f46e5;
+    color: #fff;
+}
+
+#confirm-add-module:hover {
+    background: #39396b;
+}
+
+#cancel-add-module {
+    background: #ececec;
+    color: #39396b;
+}
+
+#cancel-add-module:hover {
+    background: #d1d1e0;
+}
+
 /* Responsivo */
 @media (max-width: 700px) {
     .courses-list {

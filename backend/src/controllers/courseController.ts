@@ -128,6 +128,7 @@ export const getCoursesByTeacherId = async (req: Request, res: Response) => {
         res.status(200).json({
             Courses: courses.map(course => {
                 return {
+                    id: course.id,
                     name: course.name,
                     description: course.description,
                     price: course.price,

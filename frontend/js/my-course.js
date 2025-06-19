@@ -59,12 +59,9 @@ async function addCategories() {
 
     //Categorias selecionar
 
-    let selectCoursecategory = document.querySelector('#course-category')
-
     response.categories.forEach((item) => {
         let options = document.createElement('option')
         options.append(item.name)
-        selectCoursecategory.appendChild(options)
     })
 }
 
@@ -91,7 +88,7 @@ async function courseInfo() {
     const user = await fetch(url, {
         headers: {
             'Content-type': 'Application/json',
-            'Authorization': `bearer ${token}`
+            'Authorization': `Bearer ${token}`
         }
     })
 
@@ -136,11 +133,89 @@ async function courseInfo() {
 
         //Ações Botões
 
-        buttonAddModule.addEventListener('click', () => {
-            console.log(item)
+        buttonAddModule.addEventListener('click', async () => {
+            let cursoSelecionado = item
+
+            let moduleModal = document.querySelector('#add-module-modal')
+            moduleModal.classList.add('active')
+
+            let cancelButton = document.querySelector('#cancel-add-module')
+            let addButton = document.querySelector('#confirm-add-module')
+
+            let nameInput = document.querySelector('#module-title')
+            let descriptionInput = document.querySelector('#module-desc')
+
+            let error = document.querySelectorAll('.error')
+
+            cancelButton.addEventListener('click', () => {
+                moduleModal.classList.remove('active')
+                cursoSelecionado = null
+            })
+
+
+            addButton.addEventListener('click', async () => {
+                const url = 'http://localhost:4000/modules'
+
+                const object = {
+                    name: nameInput.value,
+                    description: descriptionInput.value,
+                    courseId: cursoSelecionado.id
+                }
+
+                const newCourse = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(object)
+
+                })
+
+                const response = await newCourse.json()
+
+                if (response.error) {
+                    if (response.error.name) {
+                        error[0].innerHTML = response.error.name
+                    } else {
+                        error[0].innerHTML = ''
+                    }
+                    if (response.error.description) {
+                        error[1].innerHTML = response.error.description
+                    } else {
+                        error[1].innerHTML = ''
+                    }
+                } else {
+                    window.location.reload()
+                }
+
+            })
+
+            /*const url = 'http://localhost:4000/modules'
+
+            const object = {
+                name: 'Orientação a MINHA MÃO',
+                description: 'Modulo de orientação a função',
+                courseId: item.id
+            }
+
+            const newCourse = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(object)
+
+            })
+
+            const response = await newCourse.json()
+
+            console.log(response)*/
         })
     })
 }
+
 
 
 
