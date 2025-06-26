@@ -6,6 +6,7 @@ let categoriesList = document.querySelector('.categories ul')
 let editBtn = document.querySelector('#edit-btn')
 let saveBtn = document.querySelector("#save-btn")
 let cancelBtn = document.querySelector('#cancel-btn')
+let logout = document.querySelector('#logout')
 
 
 async function changeName() {
@@ -91,6 +92,12 @@ async function addUser() {
     email.innerHTML = response.user.email
     type.innerHTML = response.user.type
 }
+
+logout.addEventListener('click', () => {
+    localStorage.removeItem('token')
+    window.location.replace('../../pages/auth/login.html')
+})
+
 
 let inputName = document.querySelector('#user-name-input')
 let cpfInput = document.querySelector('#user-cpf-input')

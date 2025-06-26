@@ -4,6 +4,7 @@ let explore = document.querySelector('.explore')
 let categoriesDiv = document.querySelector('.categories')
 let categoriesList = document.querySelector('.categories ul')
 let userDiv = document.querySelector('#user')
+let logout = document.querySelector('#logout')
 
 
 userDiv.addEventListener('click', () => {
@@ -145,5 +146,10 @@ async function addCategory() {
         })
     })
 }
+
+logout.addEventListener('click', () => {
+    localStorage.removeItem('token')
+    window.location.replace('../../pages/auth/login.html')
+})
 
 addCategory()

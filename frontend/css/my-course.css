@@ -37,6 +37,13 @@ nav a {
     text-decoration: none;
 }
 
+#logout {
+    width: 20px;
+    right: 0;
+    position: absolute;
+    margin-right: 100px;
+}
+
 header .container {
     display: flex;
     justify-content: space-between;

@@ -4,6 +4,7 @@ let explore = document.querySelector('.explore')
 let categoriesDiv = document.querySelector('.categories')
 let categoriesList = document.querySelector('.categories ul')
 let userDiv = document.querySelector('#user')
+let logout = document.querySelector('#logout')
 
 
 userDiv.addEventListener('click', () => {
@@ -72,6 +73,11 @@ categoriesDiv.addEventListener('mouseout', () => {
     categoriesDiv.style.marginTop = '-150vh'
 })
 
+logout.addEventListener('click', () => {
+    localStorage.removeItem('token')
+    window.location.replace('../../pages/auth/login.html')
+})
+
 
 
 async function courseInfo() {
@@ -116,10 +122,32 @@ async function courseInfo() {
 
     courseCategory.innerHTML = response.course.category.name
     courseTittle.innerHTML = response.course.name
-    console.log(response.course.description)
     courseDescription.innerHTML = response.course.description
     coursePrice.innerHTML = `R$ ${response.course.price},00`
 }
+
+let matriculationButton = document.querySelector('.enroll-btn')
+
+matriculationButton.addEventListener('click', async () => {
+    const courseId = localStorage.getItem('idCourse')
+
+    let url = 'http://localhost:4000/enrollments'
+
+    const enrollment = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'Application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ courseId: parseInt(courseId) })
+    })
+
+    const response = await enrollment.json()
+
+    console.log(response.url)
+
+    window.location.replace(response.url)
+})
 
 
 

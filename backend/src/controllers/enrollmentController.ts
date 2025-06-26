@@ -32,6 +32,7 @@ export const subscribe = async (req: Request, res: Response) => {
         res.status(200).json(checkout)
 
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: 'Não foi possivel se inscrever' })
     }
 }

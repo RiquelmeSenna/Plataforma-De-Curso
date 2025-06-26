@@ -74,6 +74,14 @@ header .container {
     margin-right: 10px;
 }
 
+#logout {
+    width: 20px;
+    position: absolute;
+    right: 0;
+    margin-right: 90px;
+    cursor: pointer;
+}
+
 .categories {
     position: absolute;
     background-color: white;

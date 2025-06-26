@@ -95,7 +95,7 @@ export const generateCheckout = async (userId: string, email: string, courseId: 
             mode: 'payment',
             client_reference_id: userId, //User ID database
             customer: customer.id,
-            success_url: 'http://localhost:4000/done',
+            success_url: 'http://127.0.0.1:5500/frontend/pages/home/initial.html',
             cancel_url: 'http://localhost:4000/error',
             line_items: [
                 {

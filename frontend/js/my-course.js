@@ -6,6 +6,7 @@ let categoriesList = document.querySelector('.categories ul')
 let userDiv = document.querySelector('#user')
 let studentPanel = document.querySelector('#student-panel')
 let teacherPanel = document.querySelector("#teacher-panel")
+let logout = document.querySelector('#logout')
 
 userDiv.addEventListener('click', () => {
     window.location.replace('../../pages/home/user.html')
@@ -28,6 +29,11 @@ async function changeName() {
         bottomCreate.style.display = 'block'
         studentPanel.style.display = 'none'
         teacherPanel.style.display = 'block'
+    }
+
+    if (response.user.type == 'Student') {
+        studentPanel.style.display = 'block'
+        teacherPanel.style.display = 'none'
     }
 
 }
@@ -82,7 +88,13 @@ categoriesDiv.addEventListener('mouseout', () => {
     categoriesDiv.style.marginTop = '-150vh'
 })
 
-async function courseInfo() {
+logout.addEventListener('click', () => {
+    localStorage.removeItem('token')
+    window.location.replace('../../pages/auth/login.html')
+})
+
+
+async function courseInfoTeacher() {
     const url = `http://localhost:4000/courses/teacher`
 
     const user = await fetch(url, {
@@ -190,36 +202,64 @@ async function courseInfo() {
                 }
 
             })
-
-            /*const url = 'http://localhost:4000/modules'
-
-            const object = {
-                name: 'Orientação a MINHA MÃO',
-                description: 'Modulo de orientação a função',
-                courseId: item.id
-            }
-
-            const newCourse = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(object)
-
-            })
-
-            const response = await newCourse.json()
-
-            console.log(response)*/
         })
     })
 }
 
+async function courseInfoStudent() {
+    const url = `http://localhost:4000/users/me`
+
+    const userStudent = await fetch(url, {
+        headers: {
+            'Content-type': 'Application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+
+    const response = await userStudent.json()
+
+    let sectionStudent = document.querySelector('#student-panel')
+    let listCourse = document.querySelector('.courses-list')
+
+    response.user.enrollment.forEach((item) => {
+
+        //Criar  elementos
+        let courseCard = document.createElement('div')
+        courseCard.classList.add('course-card')
+        let title = document.createElement('h3')
+        title.innerHTML = item.course.name
+        let status = document.createElement('p')
+        status.classList.add('course-status')
+        if (item.course.concluded === false) {
+            status.innerHTML = `Status: <span style="color: rgb(141, 141, 15);">Em andamento</span>`
+        } else {
+            status.innerHTML = `Status: <span style="color: green;">Concluido</span>`
+        }
+        let button = document.createElement('button')
+        button.innerHTML = 'Continuar Curso'
+
+        //Adicionar Elementos
+        courseCard.appendChild(title)
+        courseCard.appendChild(status)
+        courseCard.appendChild(button)
+        listCourse.appendChild(courseCard)
+        sectionStudent.appendChild(listCourse)
+
+        //Botão ação
+
+        button.addEventListener('click', () => {
+            localStorage.setItem('idCourse', item.course.id)
+            window.location.replace('../../pages/home/course.html')
+        })
+    })
+
+
+}
 
 
 
+courseInfoStudent()
 changeName()
 addCategories()
-courseInfo()
+courseInfoTeacher()
 

@@ -16,7 +16,7 @@
             <nav>
                 <ul>
                     <li><a href="../home/initial.html">Início</a></li>
-                    <li><a href="#">Sobre</a></li>
+                    <li><a href="../home/about.html">Sobre</a></li>
                     <li id="create-course" style="display: none;"><a href="#">Criar Curso</a></li>
                 </ul>
             </nav>
@@ -24,6 +24,7 @@
                 <img src="../../images/user-svgrepo-com.svg" alt="">
                 <p>Nome do usuario</p>
             </div>
+            <img id="logout" src="../../images/exit-svgrepo-com (1).svg">
         </div>
     </header>
     <div class="categories">
@@ -33,19 +34,8 @@
     <main class="dashboard">
         <!-- Painel do Aluno -->
         <section id="student-panel">
-            <h2>Meus Cursos</h2>
-            <div class="courses-list">
-                <!-- Exemplo de curso inscrito -->
-                <div class="course-card">
-                    <h3>Curso de HTML e CSS</h3>
-                    <p>Módulos concluídos: <span class="completed">3</span> de <span class="total">5</span></p>
-                    <progress value="3" max="5"></progress>
-                    <button>Continuar Curso</button>
-                </div>
-                <!-- Adicione mais cursos dinamicamente aqui -->
-            </div>
+            <div class="courses-list"></div>
         </section>
-
         <!-- Painel do Professor -->
         <section id="teacher-panel" style="display: none;">
             <h2>Cursos que Gerencio</h2>
