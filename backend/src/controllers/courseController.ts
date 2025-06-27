@@ -35,6 +35,7 @@ export const getCourseById = async (req: Request, res: Response) => {
         const course = await courseService.getCourseById(parseInt(safeData.data.id))
         res.status(200).json({
             course: {
+                id: course.id,
                 name: course.name,
                 description: course.description,
                 price: course.price,

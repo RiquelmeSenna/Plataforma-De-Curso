@@ -22,6 +22,7 @@ export const getModuleById = async (req: Request, res: Response) => {
             }
         });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'Erro ao buscar o módulo' })
     }
 }

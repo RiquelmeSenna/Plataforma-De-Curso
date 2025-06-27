@@ -8,15 +8,22 @@ export const getModuleById = async (id: number, email: string) => {
     const user = await findUserByEmail(email)
     const enrollment = await getEnrollment(user?.id as number)
 
+
     const module = await moduleModel.getModuleById(id)
+    let result = enrollment.find((e) => e.courseId === module?.courseId)
 
     if (!module) {
         throw new Error('Module not found')
     }
 
-    if (enrollment?.courseId != module?.courseId && user?.id != module?.course.teacherId) {
+    if (!result && user?.id != module?.course.teacherId) {
         throw new Error("You don't have access to for this course or are not the teacher")
     }
+
+    console.log('Errolment', enrollment)
+    console.log('Module', module)
+
+    console.log(result)
 
 
     return module

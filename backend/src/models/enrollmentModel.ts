@@ -2,9 +2,8 @@ import { prisma } from "../database/prisma";
 import { EnrollmentType } from "../types/modelsType";
 
 export const getEnrollment = async (studentId: number) => {
-    const enrollment = await prisma.enrollment.findFirst({
+    const enrollment = await prisma.enrollment.findMany({
         where: { studentId }
-
     })
 
     return enrollment

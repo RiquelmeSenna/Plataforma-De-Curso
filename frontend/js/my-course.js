@@ -249,7 +249,7 @@ async function courseInfoStudent() {
 
         button.addEventListener('click', () => {
             localStorage.setItem('idCourse', item.course.id)
-            window.location.replace('../../pages/home/course.html')
+            window.location.replace('../../pages/course/general.html')
         })
     })
 

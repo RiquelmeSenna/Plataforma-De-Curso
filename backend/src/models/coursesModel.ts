@@ -46,6 +46,7 @@ export const getCourseById = async (id: number) => {
             },
             Module: {
                 select: {
+                    id: true,
                     name: true,
                     ModuleProgress: true,
                     description: true
