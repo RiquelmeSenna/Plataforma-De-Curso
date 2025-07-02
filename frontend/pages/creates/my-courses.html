@@ -56,6 +56,35 @@
                     </div>
                 </form>
             </div>
+
+            <!-- Exemplo de modal de adicionar vídeo -->
+            <div id="add-video-modal">
+                <form class="add-video-form">
+                    <label for="video-name">Nome do Vídeo</label>
+                    <input type="text" id="video-name" name="video-name" placeholder="Digite o nome do vídeo" />
+                    <p class="error"></p>
+
+                    <label for="video-desc">Descrição</label>
+                    <textarea id="video-desc" name="video-desc" placeholder="Descreva o conteúdo do vídeo"></textarea>
+                    <p class="error"></p>
+
+                    <label for="video-url">URL do Vídeo</label>
+                    <input type="url" id="video-url" name="video-url" placeholder="Cole a URL do vídeo" />
+                    <p class="error"></p>
+
+                    <label for="video-module">Módulo</label>
+                    <select id="video-module" name="video-module">
+                        <option value="">Selecione o módulo</option>
+                        <!-- Opções de módulos devem ser preenchidas dinamicamente via JS -->
+                    </select>
+                    <p class="error"></p>
+
+                    <div class="add-video-actions">
+                        <button type="button" id="cancel-add-video">Cancelar</button>
+                        <button type="button" id="confirm-add-video">Adicionar Vídeo</button>
+                    </div>
+                </form>
+            </div>
         </section>
     </main>
 </body>

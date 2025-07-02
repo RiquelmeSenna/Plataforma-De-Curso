@@ -103,19 +103,39 @@ async function fillCourseInfo() {
         let titlemodule = document.createElement('summary')
         titlemodule.innerHTML = item.name
         let ullist = document.createElement('ul')
-        let list = document.createElement('li')
 
-        details.addEventListener('click', () => {
-            console.log(item)
+        details.addEventListener('click', async () => {
+            let urlModule = `http://localhost:4000/modules/${item.id}`
+
+            let module = await fetch(urlModule, {
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+
+            const response = await module.json()
+
+            ullist.innerHTML = ''
+
+            response.module.video.forEach((video) => {
+                let list = document.createElement('li')
+                let link = document.createElement('a')
+
+                link.textContent = video.name
+                link.href = video.url
+
+                list.appendChild(link)
+                ullist.appendChild(list)
+            })
         })
 
-        ullist.appendChild(list)
         details.appendChild(titlemodule)
         details.appendChild(ullist)
         moduleList.appendChild(details)
     })
 
-    console.log(moduleList)
+
 }
 
 fillCourseInfo()

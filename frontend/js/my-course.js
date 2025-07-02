@@ -143,8 +143,7 @@ async function courseInfoTeacher() {
         sectionTeacher.appendChild(listCourse)
 
 
-        //Ações Botões
-
+        //Adicionar Modulo
         buttonAddModule.addEventListener('click', async () => {
             let cursoSelecionado = item
 
@@ -162,6 +161,10 @@ async function courseInfoTeacher() {
             cancelButton.addEventListener('click', () => {
                 moduleModal.classList.remove('active')
                 cursoSelecionado = null
+
+                error.forEach((item) => {
+                    item.innerHTML = ''
+                })
             })
 
 
@@ -203,6 +206,101 @@ async function courseInfoTeacher() {
 
             })
         })
+
+
+        //Adicionar Video
+
+        buttonAddVideo.addEventListener('click', () => {
+            let cursoSelecionado = item
+
+            let videoModal = document.querySelector('#add-video-modal')
+            videoModal.classList.add('active')
+
+            let cancelButton = document.querySelector('#cancel-add-video')
+            let addButton = document.querySelector("#confirm-add-video")
+
+            let videoName = document.querySelector('#video-name')
+            let videoDescription = document.querySelector("#video-desc")
+            let videoUrl = document.querySelector("#video-url")
+
+            let selectModule = document.querySelector("#video-module")
+
+            selectModule.innerHTML = '<option value="">Selecione o módulo</option>'
+
+            cursoSelecionado.module.forEach((mod) => {
+                let option = document.createElement('option')
+                option.value = mod.id
+                option.textContent = mod.name
+                selectModule.appendChild(option)
+            })
+
+            let error = document.querySelectorAll('.error')
+            cancelButton.addEventListener('click', () => {
+                videoModal.classList.remove('active')
+                cursoSelecionado = null
+
+                videoName.value = ''
+                videoDescription.value = ''
+                videoUrl.value = ''
+
+                error.forEach((item) => {
+                    item.innerHTML = ''
+                })
+            })
+
+            addButton.addEventListener('click', async () => {
+                let url = 'http://localhost:4000/videos'
+
+                let object = {
+                    name: videoName.value,
+                    description: videoDescription.value,
+                    url: videoUrl.value,
+                    moduleId: parseInt(selectModule.value),
+                    duration: 1
+                }
+
+                let newVideo = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'content-type': "Application/Json",
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(object)
+                })
+
+                const response = await newVideo.json()
+
+                console.log(response)
+
+
+                if (response.error) {
+                    if (response.error.name) {
+                        error[2].innerHTML = response.error.name
+                    } else {
+                        error[2].innerHTML = ''
+                    }
+                    if (response.error.description) {
+                        error[3].innerHTML = response.error.description
+                    } else {
+                        error[3].innerHTML = ''
+                    }
+                    if (response.error.url) {
+                        error[4].innerHTML = response.error.url
+                    } else {
+                        error[4].innerHTML = ''
+                    }
+                    if (response.error.moduleId) {
+                        error[5].innerHTML = response.error.moduleId
+                    } else {
+                        error[5].innerHTML = ''
+                    }
+                } else {
+                    window.location.reload()
+                }
+
+            })
+        })
+
     })
 }
 

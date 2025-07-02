@@ -319,6 +319,104 @@ progress {
     background: #d1d1e0;
 }
 
+#add-video-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(30, 30, 47, 0.25);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.2s;
+}
+
+#add-video-modal.active {
+    visibility: visible;
+    opacity: 1;
+    display: flex;
+}
+
+.add-video-form {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 16px rgba(30, 30, 47, 0.13);
+    padding: 32px 28px 22px 28px;
+    min-width: 320px;
+    max-width: 95vw;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.add-video-form label {
+    font-size: 1rem;
+    color: #39396b;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.add-video-form input[type="text"],
+.add-video-form input[type="url"],
+.add-video-form textarea,
+.add-video-form select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #c7c7e6;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: #f7f7fa;
+    margin-bottom: 8px;
+    resize: none;
+}
+
+.add-video-form textarea {
+    min-height: 60px;
+    max-height: 120px;
+}
+
+.add-video-form select {
+    cursor: pointer;
+}
+
+.add-video-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+#confirm-add-video,
+#cancel-add-video {
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#confirm-add-video {
+    background: #4f46e5;
+    color: #fff;
+}
+
+#confirm-add-video:hover {
+    background: #39396b;
+}
+
+#cancel-add-video {
+    background: #ececec;
+    color: #39396b;
+}
+
+#cancel-add-video:hover {
+    background: #d1d1e0;
+}
+
 /* Responsivo */
 @media (max-width: 700px) {
     .courses-list {

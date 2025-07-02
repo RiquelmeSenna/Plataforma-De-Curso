@@ -20,6 +20,7 @@ export const getCoursesByTeacherId = async (teacherId: number) => {
         include: {
             Module: {
                 select: {
+                    id: true,
                     name: true,
                     description: true,
                 }
