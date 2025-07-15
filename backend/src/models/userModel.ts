@@ -32,6 +32,13 @@ export const findUserByEmail = async (email: string) => {
     return user
 }
 
+export const updateUserImageByEmail = async (email: string, imagePath: string) => {
+    return await prisma.user.update({
+        where: { email },
+        data: { profileImage: imagePath }
+    })
+}
+
 export const findUserById = async (id: number) => {
     const user = await prisma.user.findFirst(
         {

@@ -1,7 +1,19 @@
 import { Request, Response } from 'express'
 import * as userService from '../services/userService'
 import * as userValidation from '../validations/userValidation'
+import multer from 'multer'
 import { use } from 'passport'
+
+const storage = multer.diskStorage({
+    destination: 'uploads/',
+    filename: (req, file, cb) => {
+        const filename = `${Date.now()}-${file.originalname}`
+        cb(null, filename)
+    }
+})
+
+const upload = multer({ storage })
+export const uploadMiddleware = upload.single('image')
 
 
 export const getMe = async (req: Request, res: Response) => {
@@ -15,11 +27,30 @@ export const getMe = async (req: Request, res: Response) => {
                 email: user.email,
                 enrollment: user.Enrollment,
                 rating: user.Rating,
-                type: user.type
+                type: user.type,
+                profileImage: user.profileImage || null,
             }
         })
     } catch (error) {
         res.status(500).json({ error: 'Não foi possivel acessar o perfil' })
+    }
+}
+
+export const uploadProfileImage = async (req: Request, res: Response) => {
+    try {
+        const email = req.UserEmail as string
+        const filePath = req.file?.path.replace(/\\/g, '/')
+        console.log('Caminho da imagem:', filePath)
+
+        if (!filePath) {
+            return res.status(400).json({ error: 'Nenhuma imagem enviada' })
+        }
+
+        const user = await userService.updateProfileImage(email, filePath)
+
+        res.status(200).json({ message: 'Imagem atualizada com sucesso', imagePath: filePath })
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao atualizar imagem' })
     }
 }
 

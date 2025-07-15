@@ -82,6 +82,19 @@ header .container {
     cursor: pointer;
 }
 
+.profile-img-editable {
+    width: 120px;
+    /* ou o tamanho desejado */
+    height: 120px;
+    object-fit: cover;
+    /* mantém a proporção sem distorcer */
+    border-radius: 50%;
+    /* deixa a imagem redonda */
+    border: 2px solid #ccc;
+    display: block;
+    margin: 0 auto;
+}
+
 .categories {
     position: absolute;
     background-color: white;

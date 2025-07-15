@@ -316,8 +316,13 @@ async function courseInfoStudent() {
 
     const response = await userStudent.json()
 
+
     let sectionStudent = document.querySelector('#student-panel')
     let listCourse = document.querySelector('.courses-list')
+
+    if (response.user.enrollment.length > 0) {
+        sectionStudent.querySelector('h1').style.display = 'none'
+    }
 
     response.user.enrollment.forEach((item) => {
 

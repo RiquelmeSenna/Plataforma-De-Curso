@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -21,17 +15,12 @@ model User {
   email            String           @unique
   password         String
   stripeCustomerId String?
+  profileImage     String?
   Courses          Course[]
-  ModuleProgress   ModuleProgress[]
-  VideoProgress    VideoProgress[]
   Enrollment       Enrollment[]
+  ModuleProgress   ModuleProgress[]
   Rating           Rating[]
-}
-
-enum Type {
-  Student
-  Teacher
-  Admin
+  VideoProgress    VideoProgress[]
 }
 
 model Course {
@@ -39,16 +28,16 @@ model Course {
   name            String
   price           Int
   description     String
-  categoryId      Int
   teacherId       Int
-  concluded       Boolean        @default(false)
   createdAt       DateTime       @default(now())
-  stripeProductId String
   updatedAt       DateTime       @updatedAt
+  categoryId      Int
+  concluded       Boolean        @default(false)
+  stripeProductId String
   category        CourseCategory @relation(fields: [categoryId], references: [id])
   teacher         User           @relation(fields: [teacherId], references: [id])
-  Module          Module[]
   Enrollment      Enrollment[]
+  Module          Module[]
   Rating          Rating[]
 }
 
@@ -74,8 +63,8 @@ model ModuleProgress {
   studentId Int
   moduleId  Int
   finished  Boolean @default(false)
-  student   User    @relation(fields: [studentId], references: [id])
   module    Module  @relation(fields: [moduleId], references: [id])
+  student   User    @relation(fields: [studentId], references: [id])
 
   @@unique([studentId, moduleId])
 }
@@ -119,4 +108,10 @@ model Rating {
   comment   String?
   course    Course  @relation(fields: [courseId], references: [id])
   student   User    @relation(fields: [studentId], references: [id])
+}
+
+enum Type {
+  Student
+  Teacher
+  Admin
 }

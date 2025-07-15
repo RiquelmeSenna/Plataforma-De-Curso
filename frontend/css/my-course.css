@@ -220,6 +220,10 @@ progress {
     border-bottom: none;
 }
 
+#student-panel h1 {
+    text-align: center;
+}
+
 /* Modal de adicionar módulo */
 #add-module-modal {
     position: fixed;

@@ -7,6 +7,8 @@ let editBtn = document.querySelector('#edit-btn')
 let saveBtn = document.querySelector("#save-btn")
 let cancelBtn = document.querySelector('#cancel-btn')
 let logout = document.querySelector('#logout')
+let imageInput = document.querySelector('#profile-image-input')
+let profileImage = document.querySelector('#profile-image')
 
 
 async function changeName() {
@@ -91,7 +93,39 @@ async function addUser() {
     cpf.innerHTML = response.user.cpf
     email.innerHTML = response.user.email
     type.innerHTML = response.user.type
+
+    if (response.user.profileImage) {
+        profileImage.src = `http://localhost:4000/${response.user.profileImage}`
+        console.log(profileImage.src)
+    } else {
+        profileImage.src = '../../images/user-svgrepo-com.svg'
+    }
 }
+
+imageInput.addEventListener('change', async () => {
+    const file = imageInput.files[0]
+
+    if (!file) return
+
+    const formData = new FormData()
+    formData.append('image', file)
+
+    const response = await fetch('http://localhost:4000/users/me/photo', {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData
+    })
+
+    const result = await response.json()
+
+    if (response.ok) {
+        profileImage.src = `http://localhost:4000/${result.imagePath}`
+    } else {
+        alert('Erro ao enviar imagem')
+    }
+})
 
 logout.addEventListener('click', () => {
     localStorage.removeItem('token')

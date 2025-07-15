@@ -13,6 +13,11 @@ export const findUserLogged = async (email: string) => {
     return user
 }
 
+export const updateProfileImage = async (email: string, imagePath: string) => {
+    if (!imagePath) throw new Error("Imagem obrigatória")
+    return await userModel.updateUserImageByEmail(email, imagePath)
+}
+
 export const findUserById = async (id: number) => {
     const user = await userModel.findUserById(id)
 
