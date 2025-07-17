@@ -122,6 +122,7 @@ imageInput.addEventListener('change', async () => {
 
     if (response.ok) {
         profileImage.src = `http://localhost:4000/${result.imagePath}`
+
     } else {
         alert('Erro ao enviar imagem')
     }

@@ -22,17 +22,25 @@ server.use(cors())
 server.use('/webhook', webHookRouter)
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
-server.use(helmet());
+server.use(helmet({
+    crossOriginResourcePolicy: false
+}));
 
-// ✅ Middleware para liberar CORS nas imagens
-server.use('/uploads', (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:5500'); // ou localhost
-    res.header('Access-Control-Allow-Methods', 'GET');
-    next();
-});
+server.use('/uploads', express.static(path.join(__dirname, '..', 'uploads'), {
+    setHeaders: (res, path) => {
+        res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
+        res.setHeader('Access-Control-Allow-Methods', 'GET');
+    }
+}));
 
 // ✅ Serve imagens
-server.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+server.use('/uploads', express.static(path.join(__dirname, '..', 'uploads'), {
+    setHeaders: (res, path, stat) => {
+        res.setHeader('Access-Control-Allow-Origin', '*'); // ou 'http://127.0.0.1:5500' se quiser ser mais restrito
+        res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    }
+}));
 
 // Serve arquivos públicos se precisar
 server.use(express.static('public'));
