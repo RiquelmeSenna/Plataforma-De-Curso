@@ -138,3 +138,9 @@ main div img {
     cursor: pointer;
 
 }
+
+@media screen and (min-width : 1920px) {
+    .categories {
+        margin-left: 330px;
+    }
+}

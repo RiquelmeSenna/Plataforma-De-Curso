@@ -190,3 +190,9 @@ header .container {
 .btn-create-course:hover {
     background: #34345c;
 }
+
+@media screen and (min-width : 1920px) {
+    .categories {
+        margin-left: 330px;
+    }
+}

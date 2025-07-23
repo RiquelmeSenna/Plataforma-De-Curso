@@ -433,3 +433,9 @@ progress {
         max-width: 100%;
     }
 }
+
+@media screen and (min-width : 1920px) {
+    .categories {
+        margin-left: 330px;
+    }
+}

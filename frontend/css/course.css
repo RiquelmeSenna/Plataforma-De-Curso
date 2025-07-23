@@ -430,3 +430,9 @@ main {
         gap: 8px;
     }
 }
+
+@media screen and (min-width : 1920px) {
+    .categories {
+        margin-left: 330px;
+    }
+}

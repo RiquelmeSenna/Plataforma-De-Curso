@@ -22,11 +22,11 @@ export const deleteEnrollment = async (email: string) => {
     const user = await findUserByEmail(email)
     const enrollment = await enrollmentModel.getEnrollment(user?.id as number)
 
-    if (user?.id != enrollment?.studentId && user?.type != 'Admin') {
+    if (user?.id != enrollment[0]?.studentId && user?.type != 'Admin') {
         throw new Error("It's not possible delete this enrollment")
     }
 
-    const deletedEnrollment = await enrollmentModel.deleteEnrollment(enrollment?.id as number)
+    const deletedEnrollment = await enrollmentModel.deleteEnrollment(enrollment[0]?.id as number)
 
     if (!deletedEnrollment) {
         throw new Error("It's not possible delete this course")

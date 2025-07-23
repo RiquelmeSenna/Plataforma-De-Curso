@@ -43,7 +43,8 @@ export const uploadProfileImage = async (req: Request, res: Response) => {
         console.log('Caminho da imagem:', filePath)
 
         if (!filePath) {
-            return res.status(400).json({ error: 'Nenhuma imagem enviada' })
+            res.status(400).json({ error: 'Nenhuma imagem enviada' })
+            return
         }
 
         const user = await userService.updateProfileImage(email, filePath)

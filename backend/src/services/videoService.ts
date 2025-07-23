@@ -15,7 +15,7 @@ export const getVideoById = async (id: number, email: string) => {
         throw new Error("Video not exist")
     }
 
-    if (enrollment?.courseId != video.module.courseId && user?.id != video.module.course.teacherId) {
+    if (enrollment[0]?.courseId != video.module.courseId && user?.id != video.module.course.teacherId) {
         throw new Error("You don't have access to for this course or are not the teacher")
     }
 

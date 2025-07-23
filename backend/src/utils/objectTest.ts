@@ -20,7 +20,8 @@ export const createAdminUser = async () => {
         name: 'Riquelme Admin',
         password: 'Senhateste123!',
         stripeCustomerId: customer.id,
-        type: 'Admin'
+        type: 'Admin',
+        profileImage: 'https://example.com/profile-image.jpg'
     }
 
     return adminUser
@@ -36,7 +37,8 @@ export const createTeacherUser = async () => {
         name: 'Riquelme Teacher',
         password: 'Senhateste123!',
         stripeCustomerId: customer.id,
-        type: 'Teacher'
+        type: 'Teacher',
+        profileImage: 'https://example.com/profile-image.jpg'
     }
 
     return teacherUser
@@ -52,7 +54,8 @@ export const createStudentUser = async () => {
         name: 'Riquelme Senna',
         password: 'Senhateste123!',
         stripeCustomerId: customer.id,
-        type: 'Student'
+        type: 'Student',
+        profileImage: 'https://example.com/profile-image.jpg'
     }
 
     return studentUser
