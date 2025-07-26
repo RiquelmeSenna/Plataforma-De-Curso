@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: plataforma-de-curso
+    env: docker
+    repo: https://github.com/RiquelmeSenna/Plataforma-De-Curso
+    branch: main
+    rootDir: backend
