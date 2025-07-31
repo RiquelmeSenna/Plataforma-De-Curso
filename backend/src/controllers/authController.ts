@@ -11,7 +11,7 @@ export const signUp = async (req: Request, res: Response) => {
 
     if (!safeData.success) {
         res.status(401).json({ error: safeData.error.flatten().fieldErrors })
-        return
+        return//
     }
 
     try {
