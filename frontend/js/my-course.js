@@ -13,7 +13,7 @@ userDiv.addEventListener('click', () => {
 })
 
 async function changeName() {
-    const url = 'http://localhost:4000/users/me'
+    const url = 'https://plataforma-de-curso.onrender.com/users/me'
 
     const user = await fetch(url, {
         headers: {
@@ -40,7 +40,7 @@ async function changeName() {
 
 async function addCategories() {
     // Categorias Header
-    const url = 'http://localhost:4000/categories'
+    const url = 'https://plataforma-de-curso.onrender.com/categories'
 
     const categories = await fetch(url)
 
@@ -51,7 +51,7 @@ async function addCategories() {
         list.append(item.name)
         categoriesList.appendChild(list)
         list.addEventListener('click', async () => {
-            const url = `http://localhost:4000/categories/find/${list.innerHTML}`
+            const url = `https://plataforma-de-curso.onrender.com/categories/find/${list.innerHTML}`
 
             const category = await fetch(url)
 
@@ -95,7 +95,7 @@ logout.addEventListener('click', () => {
 
 
 async function courseInfoTeacher() {
-    const url = `http://localhost:4000/courses/teacher`
+    const url = `https://plataforma-de-curso.onrender.com/courses/teacher`
 
     const user = await fetch(url, {
         headers: {
@@ -169,7 +169,7 @@ async function courseInfoTeacher() {
 
 
             addButton.addEventListener('click', async () => {
-                const url = 'http://localhost:4000/modules'
+                const url = 'https://plataforma-de-curso.onrender.com/modules'
 
                 const object = {
                     name: nameInput.value,
@@ -249,7 +249,7 @@ async function courseInfoTeacher() {
             })
 
             addButton.addEventListener('click', async () => {
-                let url = 'http://localhost:4000/videos'
+                let url = 'https://plataforma-de-curso.onrender.com/videos'
 
                 let object = {
                     name: videoName.value,
@@ -305,7 +305,7 @@ async function courseInfoTeacher() {
 }
 
 async function courseInfoStudent() {
-    const url = `http://localhost:4000/users/me`
+    const url = `https://plataforma-de-curso.onrender.com/users/me`
 
     const userStudent = await fetch(url, {
         headers: {

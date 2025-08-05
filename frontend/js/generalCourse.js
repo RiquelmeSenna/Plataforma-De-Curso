@@ -12,7 +12,7 @@ userDiv.addEventListener('click', () => {
 })
 
 async function changeName() {
-    const url = 'http://localhost:4000/users/me'
+    const url = 'https://plataforma-de-curso.onrender.com/users/me'
 
     const user = await fetch(url, {
         headers: {
@@ -31,7 +31,7 @@ async function changeName() {
 }
 
 async function addCategories() {
-    const url = 'http://localhost:4000/categories'
+    const url = 'https://plataforma-de-curso.onrender.com/categories'
 
     const categories = await fetch(url)
 
@@ -42,7 +42,7 @@ async function addCategories() {
         list.append(item.name)
         categoriesList.appendChild(list)
         list.addEventListener('click', async () => {
-            const url = `http://localhost:4000/categories/find/${list.innerHTML}`
+            const url = `https://plataforma-de-curso.onrender.com/categories/find/${list.innerHTML}`
 
             const category = await fetch(url)
 
@@ -81,7 +81,7 @@ logout.addEventListener('click', () => {
 
 async function fillCourseInfo() {
     const idCourse = localStorage.getItem('idCourse')
-    const url = `http://localhost:4000/courses/${idCourse}`
+    const url = `https://plataforma-de-curso.onrender.com/courses/${idCourse}`
     const course = await fetch(url)
     const response = await course.json()
 
@@ -105,7 +105,7 @@ async function fillCourseInfo() {
         let ullist = document.createElement('ul')
 
         details.addEventListener('click', async () => {
-            let urlModule = `http://localhost:4000/modules/${item.id}`
+            let urlModule = `https://plataforma-de-curso.onrender.com/modules/${item.id}`
 
             let module = await fetch(urlModule, {
                 headers: {

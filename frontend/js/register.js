@@ -7,7 +7,7 @@ let button = document.querySelector('#btn-register')
 
 
 button.addEventListener('click', async () => {
-    let url = 'http://localhost:4000/auth/signup'
+    let url = 'https://plataforma-de-curso.onrender.com/auth/signup'
 
     let dadosDoUsuario = {
         cpf: cpfInput.value,
